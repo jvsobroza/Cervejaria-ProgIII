@@ -10,7 +10,7 @@ public class TelaEditarPerfil extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaEditarPerfil() {
-		setBounds(100, 100, 800, 500);
+		setBounds(100, 100, 1000, 600);
 	}
 
 }

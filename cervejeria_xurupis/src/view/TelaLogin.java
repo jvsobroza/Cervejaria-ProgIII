@@ -22,26 +22,24 @@ public class TelaLogin extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws IOException 
 	 */
-	public TelaLogin() {
+	public TelaLogin() throws IOException {
 
 		initComponents();
 	}
-	private void initComponents() {
+	private void initComponents() throws IOException {
 		setBackground(new Color(230, 205, 153));
-		setBounds(100, 100, 800, 500);
-		setLayout(new MigLayout("", "[grow][][grow]", "[][]"));
+		setBounds(100, 100, 1000, 600);
+		setLayout(new MigLayout("", "[grow][][][]", "[][]"));
 		BufferedImage img = null;
-		try {
-		    img = ImageIO.read(new File("img/logoNBG.png"));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-		Image dimg = img.getScaledInstance(200, 200,Image.SCALE_SMOOTH);
+
+		img = ImageIO.read(TelaLogin.class.getResource("/resources/img/logos/logoNBG.png")); 
+		Image dimg = img.getScaledInstance(250, 250,Image.SCALE_SMOOTH);
 		
 		this.lblNewLabel_1 = new JLabel("");
 		this.lblNewLabel_1.setIcon(new ImageIcon(dimg));
-		add(this.lblNewLabel_1, "cell 2 0,alignx right,aligny top");
+		add(this.lblNewLabel_1, "cell 3 0,alignx right,aligny top");
 	}
 
 }
