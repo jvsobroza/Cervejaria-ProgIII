@@ -10,7 +10,7 @@ private Conexao() {}
 	
 	public static Connection getConexao() {
         try {
-            return (Connection) DriverManager.getConnection("jdbc:mysql://localhost/cervejeria", "root", "");
+            return (Connection) DriverManager.getConnection("jdbc:mysql://localhost/cervejaria", "root", "");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

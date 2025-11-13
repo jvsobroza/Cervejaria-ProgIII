@@ -24,9 +24,9 @@ public class Janela extends JFrame {
 	private JPanel contentPane;
 	public static Janela frame;
 	private JMenuBar menuBar;
-	private JMenu menuCadastro;
+	private static JMenu menuCadastro;
 	private JMenuItem subMenuCadastrarCerveja;
-	private JMenu menuListagem;
+	private static JMenu menuListagem;
 	private JMenuItem subMenuListagemListaGeral;
 	private JMenuItem SubMenuListagemListarRotulos;
 	private JMenuItem SubMenuListagemListarEstatistica;
@@ -103,13 +103,24 @@ public class Janela extends JFrame {
 		this.menuBar.add(this.menuSair);
 
 		setContentPane(new TelaLogin());
-		
+		setMenusHabilitados(false);
+
 	}
 	
 	private ImageIcon carregarIcon(String caminho) {
 		ImageIcon icone = new ImageIcon(getClass().getResource(caminho));
 		Image img = icone.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
+	}
+	
+	public void setMenusHabilitados(boolean ds) {
+		this.menuCadastro.setEnabled(ds);
+		this.menuListagem.setEnabled(ds);
+	}
+	
+	public static void ativarMenus() {
+		menuCadastro.setEnabled(true);
+		menuListagem.setEnabled(true);
 	}
 
 }

@@ -1,26 +1,25 @@
 package model;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class Usuario {
 	private int idUsuario;
 	private String nome;
 	private String email;
-	private String cpf;
 	private String senha;
 	
 	public Usuario() {
 	}
-	public Usuario(int idUsuario, String nome, String email, String cpf, String senha) {
+	public Usuario(int idUsuario, String nome, String email, String senha) {
 		this.idUsuario = idUsuario;
 		this.nome = nome;
 		this.email = email;
-		this.cpf = cpf;
 		this.senha = senha;
 	}
-	public Usuario(String nome, String email, String cpf, String senha) {
+	public Usuario(String nome, String email, String senha) {
 		this.nome = nome;
 		this.email = email;
-		this.cpf = cpf;
-		this.senha = senha;
+		this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());
 	}
 	public int getIdUsuario() {
 		return idUsuario;
@@ -39,12 +38,6 @@ public class Usuario {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 	public String getSenha() {
 		return senha;
