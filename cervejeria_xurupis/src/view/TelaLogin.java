@@ -58,6 +58,7 @@ public class TelaLogin extends JPanel {
 	public TelaLogin() throws IOException {
 		initComponents();
 		conUsuario = new UsuarioDAO();
+		System.out.println("TESTE");
 		// BCrypt.hashpw(senhaCriptografar, BCrypt.gensalt());
 		// BCrypt.checkpw(senha, senhaCript);
 	}
@@ -183,7 +184,11 @@ public class TelaLogin extends JPanel {
 		} else if (conUsuario.verificarUsuario(txtEmail.getText().toString(), txtSenha.getText().toString())) {
 			JOptionPane.showMessageDialog(null, "Login realizado!");
 			Janela.ativarMenus();
-		}
+			Janela.frame.setContentPane(new TelaLogado()); // 1. Define o novo conteúdo
+		    Janela.frame.pack();                       // 2. FORÇA a janela a se redimensionar ao novo conteúdo
+		    Janela.frame.setLocationRelativeTo(null);  // 3. Opcional, mas bom: Recentraliza a janela
+		    Janela.frame.revalidate();                 // 4. Revalida (redundante com pack(), mas não custa)
+		    Janela.frame.repaint();}
 		else {
 			JOptionPane.showMessageDialog(null, "Erro, usuário ou senha inválidos!", "Erro login",
 					JOptionPane.ERROR_MESSAGE);
