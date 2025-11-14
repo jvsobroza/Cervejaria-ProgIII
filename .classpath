@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="cervejeria_xurupis/com.miglayout.swing_11.4.2.jar"/>
 	<classpathentry kind="lib" path="cervejeria_xurupis/src/mysql-connector-java-5.1.36-bin.jar"/>
 	<classpathentry kind="lib" path="cervejeria_xurupis/src/view/jBCrypt-0.4.jar"/>
+	<classpathentry kind="lib" path="cervejeria_xurupis/src/jBCrypt-0.4.jar"/>
 	<classpathentry kind="output" path="cervejeria_xurupis/bin"/>
 </classpath>
