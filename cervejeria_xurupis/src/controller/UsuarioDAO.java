@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import model.Usuario;
 public class UsuarioDAO {
 	private Connection conexao;
 
-	public UsuarioDAO() {
+	public UsuarioDAO() throws IOException {
 		this.conexao = Conexao.getConexao();
 	}//BCrypt.hashpw(senhaCriptografar, BCrypt.gensalt());
 	//BCrypt.checkpw(senha, senhaCript);

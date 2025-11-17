@@ -58,7 +58,6 @@ public class TelaLogin extends JPanel {
 	public TelaLogin() throws IOException {
 		initComponents();
 		conUsuario = new UsuarioDAO();
-		System.out.println("TESTE");
 		// BCrypt.hashpw(senhaCriptografar, BCrypt.gensalt());
 		// BCrypt.checkpw(senha, senhaCript);
 	}
