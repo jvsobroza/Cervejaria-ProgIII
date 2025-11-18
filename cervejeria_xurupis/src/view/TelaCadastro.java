@@ -1,16 +1,289 @@
 package view;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import model.Cerveja;
+import model.Usuario;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+
+import controller.CervejaDAO;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+/*
+ * JFileChooser fileChooser = new JFileChooser();
+
+        // 2. Exibir a janela de diálogo e obter a resposta do usuário
+        // O showOpenDialog() abre o seletor para abrir um arquivo
+        int result = fileChooser.showOpenDialog(null);
+
+        // 3. Verificar se o usuário selecionou um arquivo
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // 4. Obter o arquivo selecionado
+            java.io.File selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
+            // Aqui você pode processar o arquivo (ler, salvar, etc.)
+        } else {
+            System.out.println("Nenhum arquivo foi selecionado.");
+        }
+ */
 public class TelaCadastro extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private JLabel lblNewLabel;
+	private Usuario user;
+	private JLabel lblNewLabel_1;
+	private JComboBox comboCerveja;
+	private JLabel lblNewLabel_2;
+	private JTextField txtTipo;
+	private JLabel lblNewLabel_3;
+	private JTextField txtTeor;
+	private JLabel lblNewLabel_4;
+	private JTextField txtIbu;
+	private JLabel lblNewLabel_5;
+	private JTextField textField;
+	private JLabel lblNewLabel_6;
+	private JFormattedTextField txtData;
+	private JLabel lblNewLabel_7;
+	private JTextField txtLocal;
+	private JLabel lblNewLabel_8;
+	private JTextField txtAvaliacao;
+	private JLabel lblNewLabel_9;
+	private JTextArea txtComentario;
+	private JLabel lblNewLabel_10;
+	private JButton btEscolherRotulo;
+	private JLabel labelNomeImg;
+	private JLabel lblNewLabel_11;
+	private JTextField txtSugestao;
+	private JButton btCadastrarDegustacao;
+	private CervejaDAO conCerveja;
+	private LinkedList<Cerveja> listaCerveja;
 
 	/**
 	 * Create the panel.
+	 * @throws IOException 
 	 */
-	public TelaCadastro() {
+	public TelaCadastro(Usuario user) throws IOException {
+		this.user = user;
+		conCerveja = new CervejaDAO();
+		initComponents();
+		listaCerveja = conCerveja.selectCerveja();
+		iniciarCombo();
+		String caminhoSalvar = "cervejeria_xurupis/src/resources/rotulos/";
+		JFileChooser fileChooser = new JFileChooser();
+		int userSelection = fileChooser.showSaveDialog(null); // Use o componente pai apropriado, ou null
+
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+		    File fileToSave = fileChooser.getSelectedFile();
+		    // Adiciona a extensão se necessário (JFileChooser não faz isso automaticamente)
+		    if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
+		        fileToSave = new File(fileToSave.getAbsolutePath() + ".txt");
+		    }
+
+		    // Agora, use 'fileToSave' para escrever os dados do seu arquivo (usando java.io.* ou java.nio.*)
+		    System.out.println("Salvar como arquivo: " + fileToSave.getAbsolutePath());
+		    // Exemplo de escrita:
+		    // try (FileWriter fw = new FileWriter(fileToSave)) {
+		    //     fw.write("Conteúdo a ser salvo.");
+		    // } catch (IOException e) {
+		    //     e.printStackTrace();
+		    // }
+		}
+	}
+
+	private void initComponents() {
 		setBounds(100, 100, 1000, 600);
+		setBackground(new Color(230, 205, 153));
+		setLayout(new MigLayout("", "[][][grow][grow]", "[][][][][][][][][][][63.00][][][]"));
+
+		this.lblNewLabel = new JLabel("Cadastre sua desgustação!");
+		this.lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		add(this.lblNewLabel, "cell 0 0");
+
+		this.lblNewLabel_1 = new JLabel("Cerveja:");
+		add(this.lblNewLabel_1, "cell 1 2,alignx right");
+
+		this.comboCerveja = new JComboBox();
+		this.comboCerveja.setModel(new DefaultComboBoxModel(new String[] { "(Escolha a cerveja)" }));
+		add(this.comboCerveja, "cell 2 2,growx");
+
+		this.lblNewLabel_2 = new JLabel("Tipo:");
+		add(this.lblNewLabel_2, "cell 1 3,alignx trailing");
+
+		this.txtTipo = new JTextField();
+		this.txtTipo.setEditable(false);
+		add(this.txtTipo, "cell 2 3");
+		this.txtTipo.setColumns(10);
+
+		this.lblNewLabel_3 = new JLabel("Teor alcoólico:");
+		add(this.lblNewLabel_3, "cell 1 4,alignx trailing");
+
+		this.txtTeor = new JTextField();
+		this.txtTeor.setEditable(false);
+		add(this.txtTeor, "cell 2 4");
+		this.txtTeor.setColumns(10);
+
+		this.lblNewLabel_4 = new JLabel("IBU:");
+		add(this.lblNewLabel_4, "cell 1 5,alignx trailing");
+
+		this.txtIbu = new JTextField();
+		this.txtIbu.setEditable(false);
+		add(this.txtIbu, "cell 2 5");
+		this.txtIbu.setColumns(10);
+
+		this.lblNewLabel_5 = new JLabel("País de origem:");
+		add(this.lblNewLabel_5, "cell 1 6,alignx trailing");
+
+		this.textField = new JTextField();
+		this.textField.setEditable(false);
+		add(this.textField, "cell 2 6,growx,aligny center");
+		this.textField.setColumns(10);
+
+		this.lblNewLabel_6 = new JLabel("Data de degustação");
+		add(this.lblNewLabel_6, "cell 1 7,alignx trailing");
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		this.txtData = new JFormattedTextField(format);
+		this.txtData.setText("01/01/1999");
+		this.txtData.setForeground(Color.gray);
+		this.txtData.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtData.getText().equals("01/01/1999")) {
+					txtData.setText("");
+					txtData.setForeground(Color.BLACK);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtData.getText().isEmpty()) {
+					txtData.setText("01/01/1999");
+					txtData.setForeground(Color.GRAY);
+				}
+			}
+		});
+		add(this.txtData, "cell 2 7,growx");
+
+		this.lblNewLabel_7 = new JLabel("Local de degustação:");
+		add(this.lblNewLabel_7, "cell 1 8,alignx trailing");
+
+		this.txtLocal = new JTextField();
+		add(this.txtLocal, "cell 2 8,growx");
+		this.txtLocal.setColumns(10);
+
+		this.lblNewLabel_8 = new JLabel("Avaliação (1-10):");
+		add(this.lblNewLabel_8, "cell 1 9,alignx trailing");
+
+		this.txtAvaliacao = new JTextField();
+		this.txtAvaliacao.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyCode() != e.VK_BACK_SPACE) {
+					if (String.valueOf(e.getKeyChar()).matches("[0-9]")) {
+						if (txtAvaliacao.getText().length() > 1) {
+							e.consume();
+						}
+						if (!txtAvaliacao.getText().trim().equals("")) {
+							if (Integer.parseInt(txtAvaliacao.getText() + e.getKeyChar()) > 10) {
+								e.consume();
+							}
+						}
+					}
+					else {
+						e.consume();
+					}
+				}
+			}
+		});
+
+		add(this.txtAvaliacao, "cell 2 9");
+		this.txtAvaliacao.setColumns(2);
+
+		this.lblNewLabel_9 = new JLabel("Comentários:");
+		add(this.lblNewLabel_9, "cell 1 10,alignx right,aligny top");
+
+		this.txtComentario = new JTextArea();
+		add(this.txtComentario, "cell 2 10,grow");
+
+		this.lblNewLabel_10 = new JLabel("Rótulo:");
+		add(this.lblNewLabel_10, "cell 1 11,alignx right");
+
+		this.btEscolherRotulo = new JButton("Escolher imagem");
+		this.btEscolherRotulo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+
+				// 2. Defina como o usuário pode interagir (opcional)
+				// Para permitir apenas arquivos:
+				// fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				// Para permitir apenas diretórios:
+				// fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+				// 3. Abra a janela de diálogo (abrir ou salvar)
+				// O `(Component) e.getSource()` é opcional, mas recomendado para centralizar a
+				// janela
+				int returnValue = fileChooser.showOpenDialog((java.awt.Component) e.getSource());
+
+				// 4. Verifique se o usuário clicou em "Abrir" (ou "Salvar")
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					// 5. Obtenha o arquivo selecionado
+					File selectedFile = fileChooser.getSelectedFile();
+
+					// Exemplo: Exibir o nome do arquivo em um JLabel ou JTextArea
+					// Se você tiver um JLabel chamado `lblNomeArquivo`:
+					// lblNomeArquivo.setText(selectedFile.getName());
+					System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
+				} else {
+					System.out.println("Nenhum arquivo selecionado.");
+				}
+			}
+		});
+		add(this.btEscolherRotulo, "flowx,cell 2 11");
+
+		this.labelNomeImg = new JLabel("");
+		add(this.labelNomeImg, "cell 2 11,alignx left");
+		
+		this.lblNewLabel_11 = new JLabel("Sugestão:");
+		add(this.lblNewLabel_11, "cell 1 12,alignx trailing");
+		
+		this.txtSugestao = new JTextField();
+		add(this.txtSugestao, "cell 2 12,growx");
+		this.txtSugestao.setColumns(10);
+		
+		this.btCadastrarDegustacao = new JButton("Cadastrar degustação");
+		this.btCadastrarDegustacao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(this.btCadastrarDegustacao, "cell 2 13,alignx right");
+	}
+	
+	public void iniciarCombo() {
+		for (Cerveja ceva : listaCerveja) {
+			comboCerveja.addItem("Nome: " + ceva.getNome() + " Tipo: " + ceva.getTipo());
+		}
 	}
 
 }

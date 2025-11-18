@@ -10,12 +10,12 @@ public class Usuario_Cerveja {
 	private int Avaliacao;
 	private String critica;
 	private String foto;
+	private String sugestao;
 	
 	public Usuario_Cerveja() {
-		super();
 	}
 	public Usuario_Cerveja(int idUsuario, int idCerveja, String dataDegustacao, String localDegustacao, int avaliacao,
-			String critica, String foto) {
+			String critica, String foto, String sugestao) {
 		super();
 		this.idUsuario = idUsuario;
 		this.idCerveja = idCerveja;
@@ -24,9 +24,10 @@ public class Usuario_Cerveja {
 		Avaliacao = avaliacao;
 		this.critica = critica;
 		this.foto = foto;
+		this.sugestao = sugestao;
 	}
 	public Usuario_Cerveja(int idCervejaUsuario, int idUsuario, int idCerveja, String dataDegustacao,
-			String localDegustacao, int avaliacao, String critica, String foto) {
+			String localDegustacao, int avaliacao, String critica, String foto, String sugestao) {
 		super();
 		this.idCervejaUsuario = idCervejaUsuario;
 		this.idUsuario = idUsuario;
@@ -36,6 +37,7 @@ public class Usuario_Cerveja {
 		Avaliacao = avaliacao;
 		this.critica = critica;
 		this.foto = foto;
+		this.sugestao = sugestao;
 	}
 	public int getIdCervejaUsuario() {
 		return idCervejaUsuario;

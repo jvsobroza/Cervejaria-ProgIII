@@ -83,6 +83,13 @@ public class Janela extends JFrame {
 		this.subMenuCadastrarCerveja = new JMenuItem("Cadastrar Degustação");
 		this.subMenuCadastrarCerveja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					setContentPane(new TelaCadastro(us));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				setVisible(true);
 			}
 		});
 		this.subMenuCadastrarCerveja.setIcon(iconeCerveja);
