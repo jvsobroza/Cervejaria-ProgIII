@@ -16,9 +16,9 @@ public class UsuarioDAO {
 
 	public UsuarioDAO() throws IOException {
 		this.conexao = Conexao.getConexao();
-	}//BCrypt.hashpw(senhaCriptografar, BCrypt.gensalt());
-	//BCrypt.checkpw(senha, senhaCript);
-	
+	}// BCrypt.hashpw(senhaCriptografar, BCrypt.gensalt());
+		// BCrypt.checkpw(senha, senhaCript);
+
 	public boolean verificarUsuario(String email, String senha) {
 		String sql = "SELECT * FROM usuario WHERE email = ?";
 		try {
@@ -29,18 +29,18 @@ public class UsuarioDAO {
 				if (rs.getString("email").equals(email)) {
 					if (BCrypt.checkpw(senha, rs.getString("senha"))) {
 						return true;
-					}
-					else return false;
-				}
-				else return false;
+					} else
+						return false;
+				} else
+					return false;
 			}
 			return false;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return false;
 	}
-	
+
 	public boolean inserirUsuario(Usuario user) {
 		String sql = "INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)";
 		try {
@@ -50,12 +50,12 @@ public class UsuarioDAO {
 			ps.setString(3, user.getSenha());
 			ps.execute();
 			return true;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return false;
 	}
-	
+
 	public boolean verificarEmail(String email) {
 		String sql = "SELECT COUNT(*) FROM usuario WHERE email = ?";
 		try {
@@ -65,13 +65,32 @@ public class UsuarioDAO {
 			if (rs.next()) {
 				if (rs.getInt(1) > 0) {
 					return true;
-				}
-				else return false;
+				} else
+					return false;
 			}
 			return false;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return false;
+	}
+
+	public Usuario selectUsuario(String email) {
+		String sql = "SELECT * FROM usuario WHERE email = ?";
+		Usuario us = new Usuario();
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setString(1, email);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				us.setIdUsuario(rs.getInt("id_usuario"));
+				us.setNome(rs.getString("nome"));
+				us.setEmail(rs.getString("email"));
+				us.setSenhaHash(rs.getString("senha"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return us;
 	}
 }

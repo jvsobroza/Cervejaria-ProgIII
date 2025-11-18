@@ -45,5 +45,8 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	public void setSenhaHash(String senha) {
+		this.senha = senha;
+	}
 
 }

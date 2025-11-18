@@ -128,7 +128,12 @@ public class TelaLogin extends JPanel {
 		this.btnNewButton_1 = new JButton("Realizar Login");
 		this.btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				realizarLogin();
+				try {
+					realizarLogin();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		this.btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -173,7 +178,7 @@ public class TelaLogin extends JPanel {
 		}
 	}
 	
-	public void realizarLogin() {
+	public void realizarLogin() throws IOException {
 		if (txtEmail.getText().toString().equals("") || txtSenha.getText().toString().equals("")) {
 			JOptionPane.showMessageDialog(null, "Erro! Há campos vazios!", "Erro login",
 					JOptionPane.ERROR_MESSAGE);
@@ -183,7 +188,9 @@ public class TelaLogin extends JPanel {
 		} else if (conUsuario.verificarUsuario(txtEmail.getText().toString(), txtSenha.getText().toString())) {
 			JOptionPane.showMessageDialog(null, "Login realizado!");
 			Janela.ativarMenus();
-			Janela.frame.setContentPane(new TelaLogado()); 
+			Usuario us = conUsuario.selectUsuario(txtEmail.getText());
+			Janela.setUsuario(us);
+			Janela.frame.setContentPane(new TelaLogado(us)); 
 			Janela.frame.setVisible(true);
 			}
 		else {

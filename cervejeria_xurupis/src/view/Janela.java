@@ -8,6 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Usuario;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -35,8 +38,13 @@ public class Janela extends JFrame {
 	private ImageIcon iconeSair = carregarIcon("/resources/img/icones/sair.png"); // https://www.flaticon.com/br/icones-gratis/sair Sair ícones criados por Iconpro86 - Flaticon
 	private ImageIcon iconeCerveja = carregarIcon("/resources/img/icones/cerveja.png"); // https://www.flaticon.com/br/icones-gratis/cerveja Cerveja ícones criados por Good Ware - Flaticon
 	private ImageIcon iconeListaEstatistica = carregarIcon("/resources/img/icones/estatistica.png"); // https://www.flaticon.com/br/icones-gratis/grafico-de-pizza Gráfico de pizza ícones criados por Andrean Prabowo - Flaticon
-	private ImageIcon iconeListaRotulo = carregarIcon("/resources/img/icones/rotulo.png"); // https://www.flaticon.com/br/icones-gratis/rotulo rótulo ícones">Rótulo ícones criados por Good Ware - Flaticon
-	private JMenu menuSair;
+	private ImageIcon iconeListaRotulo = carregarIcon("/resources/img/icones/rotulo.png"); // https://www.flaticon.com/br/icones-gratis/rotulo rótulo ícones Rótulo ícones criados por Good Ware - Flaticon
+	private ImageIcon iconeListaGeral = carregarIcon("/resources/img/icones/lista_geral.png"); // https://www.flaticon.com/br/icones-gratis/visao-geral Visão geral ícones criados por Vectorsclub
+	private ImageIcon iconeDeslogar = carregarIcon("/resources/img/icones/logout.png"); // https://www.flaticon.com/br/icones-gratis/saida Saída ícones criados por riajulislam - Flaticon
+	private static JMenu menuSair;
+	private JMenuItem subMenuSairDeslog;
+	private JMenu menuReturn;
+	public static Usuario us;
 	/**
 	 * Launch the application.
 	 */
@@ -73,6 +81,10 @@ public class Janela extends JFrame {
 		this.menuBar.add(this.menuCadastro);
 		
 		this.subMenuCadastrarCerveja = new JMenuItem("Cadastrar Degustação");
+		this.subMenuCadastrarCerveja.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		this.subMenuCadastrarCerveja.setIcon(iconeCerveja);
 		this.menuCadastro.add(this.subMenuCadastrarCerveja);
 		
@@ -81,26 +93,75 @@ public class Janela extends JFrame {
 		this.menuBar.add(this.menuListagem);
 		
 		this.subMenuListagemListaGeral = new JMenuItem("Lista Geral");
+		this.subMenuListagemListaGeral.setIcon(iconeListaGeral);
+		this.subMenuListagemListaGeral.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		this.menuListagem.add(this.subMenuListagemListaGeral);
 		
 		this.SubMenuListagemListarEstatistica = new JMenuItem("Listar Estatísticas");
+		this.SubMenuListagemListarEstatistica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		this.SubMenuListagemListarEstatistica.setIcon(iconeListaEstatistica);
 		this.menuListagem.add(this.SubMenuListagemListarEstatistica);
 		
 		this.SubMenuListagemListarRotulos = new JMenuItem("Listar Rótulos");
+		this.SubMenuListagemListarRotulos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		this.SubMenuListagemListarRotulos.setIcon(iconeListaRotulo);
 		this.menuListagem.add(this.SubMenuListagemListarRotulos);
 		
 		this.menuSair = new JMenu("Sair");
-		this.menuSair.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Saindo...");
-				System.exit(0);
-			}
-		});
 		this.menuSair.setIcon(iconeSair);
 		this.menuBar.add(this.menuSair);
+		
+		this.subMenuSairDeslog = new JMenuItem("Deslogar");
+		this.subMenuSairDeslog.setIcon(iconeDeslogar);
+		this.subMenuSairDeslog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setMenusHabilitados(false);
+				us = null;
+				try {
+					setContentPane(new TelaLogin());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				setVisible(true);
+			}
+		});
+		this.menuSair.add(this.subMenuSairDeslog);
+		
+		this.menuReturn = new JMenu("Retornar");
+		this.menuReturn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (menuCadastro.isEnabled() == true) {
+					try {
+						setContentPane(new TelaLogado(us));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					setVisible(true);
+				}
+				else {
+					try {
+						setContentPane(new TelaLogin());
+						setVisible(true);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		this.menuBar.add(this.menuReturn);
 
 		setContentPane(new TelaLogin());
 		setMenusHabilitados(false);
@@ -116,11 +177,17 @@ public class Janela extends JFrame {
 	public void setMenusHabilitados(boolean ds) {
 		this.menuCadastro.setEnabled(ds);
 		this.menuListagem.setEnabled(ds);
+		this.menuSair.setEnabled(ds);
+	}
+	
+	public static void setUsuario(Usuario user) {
+		us = user;
 	}
 	
 	public static void ativarMenus() {
 		menuCadastro.setEnabled(true);
 		menuListagem.setEnabled(true);
+		menuSair.setEnabled(true);
 	}
 
 }
