@@ -3,6 +3,8 @@ package view;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -11,9 +13,12 @@ import model.Cerveja;
 import model.Usuario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.CervejaDAO;
 
@@ -83,7 +88,8 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Create the panel.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public TelaCadastro(Usuario user) throws IOException {
 		this.user = user;
@@ -92,25 +98,6 @@ public class TelaCadastro extends JPanel {
 		listaCerveja = conCerveja.selectCerveja();
 		iniciarCombo();
 		String caminhoSalvar = "cervejeria_xurupis/src/resources/rotulos/";
-		JFileChooser fileChooser = new JFileChooser();
-		int userSelection = fileChooser.showSaveDialog(null); // Use o componente pai apropriado, ou null
-
-		if (userSelection == JFileChooser.APPROVE_OPTION) {
-		    File fileToSave = fileChooser.getSelectedFile();
-		    // Adiciona a extensão se necessário (JFileChooser não faz isso automaticamente)
-		    if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
-		        fileToSave = new File(fileToSave.getAbsolutePath() + ".txt");
-		    }
-
-		    // Agora, use 'fileToSave' para escrever os dados do seu arquivo (usando java.io.* ou java.nio.*)
-		    System.out.println("Salvar como arquivo: " + fileToSave.getAbsolutePath());
-		    // Exemplo de escrita:
-		    // try (FileWriter fw = new FileWriter(fileToSave)) {
-		    //     fw.write("Conteúdo a ser salvo.");
-		    // } catch (IOException e) {
-		    //     e.printStackTrace();
-		    // }
-		}
 	}
 
 	private void initComponents() {
@@ -210,8 +197,7 @@ public class TelaCadastro extends JPanel {
 								e.consume();
 							}
 						}
-					}
-					else {
+					} else {
 						e.consume();
 					}
 				}
@@ -233,30 +219,28 @@ public class TelaCadastro extends JPanel {
 		this.btEscolherRotulo = new JButton("Escolher imagem");
 		this.btEscolherRotulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser chooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif");
+				chooser.setFileFilter(filter);
 
-				// 2. Defina como o usuário pode interagir (opcional)
-				// Para permitir apenas arquivos:
-				// fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				// Para permitir apenas diretórios:
-				// fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int result = chooser.showOpenDialog(null);
 
-				// 3. Abra a janela de diálogo (abrir ou salvar)
-				// O `(Component) e.getSource()` é opcional, mas recomendado para centralizar a
-				// janela
-				int returnValue = fileChooser.showOpenDialog((java.awt.Component) e.getSource());
+				if (result == JFileChooser.APPROVE_OPTION) {
+					File origem = chooser.getSelectedFile();
 
-				// 4. Verifique se o usuário clicou em "Abrir" (ou "Salvar")
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					// 5. Obtenha o arquivo selecionado
-					File selectedFile = fileChooser.getSelectedFile();
+					try {
+						File destinoPasta = new File("src/resources/img");
+						if (!destinoPasta.exists())
+							destinoPasta.mkdirs();
 
-					// Exemplo: Exibir o nome do arquivo em um JLabel ou JTextArea
-					// Se você tiver um JLabel chamado `lblNomeArquivo`:
-					// lblNomeArquivo.setText(selectedFile.getName());
-					System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
-				} else {
-					System.out.println("Nenhum arquivo selecionado.");
+						File destino = new File(destinoPasta, origem.getName());
+						Files.copy(origem.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+						JOptionPane.showMessageDialog(null, "Imagem salva em /imagens");
+
+					} catch (IOException ex) {
+						JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex.getMessage());
+					}
 				}
 			}
 		});
@@ -264,14 +248,14 @@ public class TelaCadastro extends JPanel {
 
 		this.labelNomeImg = new JLabel("");
 		add(this.labelNomeImg, "cell 2 11,alignx left");
-		
+
 		this.lblNewLabel_11 = new JLabel("Sugestão:");
 		add(this.lblNewLabel_11, "cell 1 12,alignx trailing");
-		
+
 		this.txtSugestao = new JTextField();
 		add(this.txtSugestao, "cell 2 12,growx");
 		this.txtSugestao.setColumns(10);
-		
+
 		this.btCadastrarDegustacao = new JButton("Cadastrar degustação");
 		this.btCadastrarDegustacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -279,7 +263,7 @@ public class TelaCadastro extends JPanel {
 		});
 		add(this.btCadastrarDegustacao, "cell 2 13,alignx right");
 	}
-	
+
 	public void iniciarCombo() {
 		for (Cerveja ceva : listaCerveja) {
 			comboCerveja.addItem("Nome: " + ceva.getNome() + " Tipo: " + ceva.getTipo());
