@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import model.Cerveja;
 import model.Usuario;
+import model.Usuario_Cerveja;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.CervejaDAO;
+import controller.UsuarioCervejaDAO;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFormattedTextField;
@@ -68,7 +70,7 @@ public class TelaCadastro extends JPanel {
 	private JLabel lblNewLabel_4;
 	private JTextField txtIbu;
 	private JLabel lblNewLabel_5;
-	private JTextField textField;
+	private JTextField txtPais;
 	private JLabel lblNewLabel_6;
 	private JFormattedTextField txtData;
 	private JLabel lblNewLabel_7;
@@ -85,6 +87,7 @@ public class TelaCadastro extends JPanel {
 	private JButton btCadastrarDegustacao;
 	private CervejaDAO conCerveja;
 	private LinkedList<Cerveja> listaCerveja;
+	private File imagem = null;
 
 	/**
 	 * Create the panel.
@@ -96,8 +99,8 @@ public class TelaCadastro extends JPanel {
 		conCerveja = new CervejaDAO();
 		initComponents();
 		listaCerveja = conCerveja.selectCerveja();
+		UsuarioCervejaDAO con = new UsuarioCervejaDAO();
 		iniciarCombo();
-		String caminhoSalvar = "cervejeria_xurupis/src/resources/rotulos/";
 	}
 
 	private void initComponents() {
@@ -113,6 +116,18 @@ public class TelaCadastro extends JPanel {
 		add(this.lblNewLabel_1, "cell 1 2,alignx right");
 
 		this.comboCerveja = new JComboBox();
+		this.comboCerveja.setMaximumRowCount(100);
+		this.comboCerveja.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (comboCerveja.getSelectedIndex() > 0) {
+					preencherCerveja();
+				} else {
+					txtTeor.setText("");
+					txtTipo.setText("");
+					txtIbu.setText("");
+				}
+			}
+		});
 		this.comboCerveja.setModel(new DefaultComboBoxModel(new String[] { "(Escolha a cerveja)" }));
 		add(this.comboCerveja, "cell 2 2,growx");
 
@@ -122,7 +137,7 @@ public class TelaCadastro extends JPanel {
 		this.txtTipo = new JTextField();
 		this.txtTipo.setEditable(false);
 		add(this.txtTipo, "cell 2 3");
-		this.txtTipo.setColumns(10);
+		this.txtTipo.setColumns(30);
 
 		this.lblNewLabel_3 = new JLabel("Teor alcoólico:");
 		add(this.lblNewLabel_3, "cell 1 4,alignx trailing");
@@ -143,10 +158,10 @@ public class TelaCadastro extends JPanel {
 		this.lblNewLabel_5 = new JLabel("País de origem:");
 		add(this.lblNewLabel_5, "cell 1 6,alignx trailing");
 
-		this.textField = new JTextField();
-		this.textField.setEditable(false);
-		add(this.textField, "cell 2 6,growx,aligny center");
-		this.textField.setColumns(10);
+		this.txtPais = new JTextField();
+		this.txtPais.setEditable(false);
+		add(this.txtPais, "cell 2 6,growx,aligny center");
+		this.txtPais.setColumns(10);
 
 		this.lblNewLabel_6 = new JLabel("Data de degustação");
 		add(this.lblNewLabel_6, "cell 1 7,alignx trailing");
@@ -226,21 +241,8 @@ public class TelaCadastro extends JPanel {
 				int result = chooser.showOpenDialog(null);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
-					File origem = chooser.getSelectedFile();
-
-					try {
-						File destinoPasta = new File("src/resources/img");
-						if (!destinoPasta.exists())
-							destinoPasta.mkdirs();
-
-						File destino = new File(destinoPasta, origem.getName());
-						Files.copy(origem.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-						JOptionPane.showMessageDialog(null, "Imagem salva em /imagens");
-
-					} catch (IOException ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex.getMessage());
-					}
+					imagem = chooser.getSelectedFile();
+					labelNomeImg.setText(imagem.getName());
 				}
 			}
 		});
@@ -255,10 +257,14 @@ public class TelaCadastro extends JPanel {
 		this.txtSugestao = new JTextField();
 		add(this.txtSugestao, "cell 2 12,growx");
 		this.txtSugestao.setColumns(10);
-
 		this.btCadastrarDegustacao = new JButton("Cadastrar degustação");
 		this.btCadastrarDegustacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (possuiCamposVazios()) {
+					JOptionPane.showMessageDialog(null, "Possui campos vazios!", "Erro!", JOptionPane.ERROR_MESSAGE);
+				} else {
+					inserirDegustacao();
+				}
 			}
 		});
 		add(this.btCadastrarDegustacao, "cell 2 13,alignx right");
@@ -266,7 +272,59 @@ public class TelaCadastro extends JPanel {
 
 	public void iniciarCombo() {
 		for (Cerveja ceva : listaCerveja) {
-			comboCerveja.addItem("Nome: " + ceva.getNome() + " Tipo: " + ceva.getTipo());
+			comboCerveja.addItem("Nome: " + ceva.getNome());
+		}
+	}
+
+	public void preencherCerveja() {
+		Cerveja ceva = listaCerveja.get(comboCerveja.getSelectedIndex() - 1);
+		txtTipo.setText(ceva.getTipo());
+		txtIbu.setText(ceva.getIbu() + "");
+		txtTeor.setText(ceva.getTeorAlcolico() + "");
+		txtPais.setText(ceva.getPais());
+	}
+
+	public boolean possuiCamposVazios() {
+		this.txtTipo.getText().equals("");
+		boolean verifica = (this.txtTipo.getText().equals("") || this.txtAvaliacao.getText().equals("")
+				|| this.txtComentario.getText().equals("") || this.txtComentario.getText().equals("")
+				|| this.txtData.getText().equals("") || this.txtLocal.getText().equals("")
+				|| this.txtSugestao.getText().equals("") || this.labelNomeImg.getText().equals("")) ? true : false;
+		return verifica;
+	}
+
+	public void inserirDegustacao() {
+		try {
+			String imagemBd = "";
+			if (this.imagem != null) {
+				File pastaDestino = new File("resources/img");
+				if (!pastaDestino.exists()) {
+					pastaDestino.mkdirs();
+				}
+				File arquivoDestino = new File(pastaDestino, imagem.getName());
+				Files.copy(imagem.toPath(), arquivoDestino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				imagemBd = "/resources/img/" + imagem.getName();
+			}
+			Usuario_Cerveja degustacao = new Usuario_Cerveja();
+			degustacao.setIdUsuario(user.getIdUsuario());
+			Cerveja id = listaCerveja.get(comboCerveja.getSelectedIndex() - 1);
+			degustacao.setIdCerveja(id.getIdCerveja());
+			degustacao.setAvaliacao(Integer.parseInt(txtAvaliacao.getText()));
+			degustacao.setCritica(txtComentario.getText().toString());
+			degustacao.setDataDegustacao(txtData.getText().toString());
+			degustacao.setLocalDegustacao(txtLocal.getText().toString());
+			degustacao.setSugestao(txtSugestao.getText().toString());
+			degustacao.setFoto(imagemBd);
+			UsuarioCervejaDAO con = new UsuarioCervejaDAO();
+			if (con.inserirDegustacao(degustacao)) {
+				JOptionPane.showMessageDialog(null, "Cadastro e imagem salvos com sucesso!");
+			}
+
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(null, "Erro ao mover a imagem: " + ex.getMessage());
+			ex.printStackTrace();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + ex.getMessage());
 		}
 	}
 

@@ -64,6 +64,11 @@ public class Cerveja {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
+	@Override
+	public String toString() {
+		return "Cerveja [idCerveja=" + idCerveja + ", nome=" + nome + ", tipo=" + tipo + ", teorAlcolico="
+				+ teorAlcolico + ", ibu=" + ibu + ", pais=" + pais + "]";
+	}
 	
 	
 }

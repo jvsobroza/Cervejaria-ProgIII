@@ -31,6 +31,7 @@ public class CervejaDAO {
 				ceva.setIbu(rs.getInt("ibu"));
 				ceva.setTeorAlcolico(rs.getDouble("teor_alcolico"));
 				ceva.setTipo(rs.getString("tipo"));
+				System.out.println(ceva.toString());
 				ls.add(ceva);
 			}
 		}catch(SQLException e) {
