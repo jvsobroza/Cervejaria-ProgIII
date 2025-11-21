@@ -103,6 +103,13 @@ public class Janela extends JFrame {
 		this.subMenuListagemListaGeral.setIcon(iconeListaGeral);
 		this.subMenuListagemListaGeral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					setContentPane(new TelaListarCervejas(us));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				setVisible(true);
 			}
 		});
 		this.menuListagem.add(this.subMenuListagemListaGeral);
