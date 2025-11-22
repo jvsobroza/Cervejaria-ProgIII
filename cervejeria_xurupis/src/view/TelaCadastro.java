@@ -297,13 +297,15 @@ public class TelaCadastro extends JPanel {
 		try {
 			String imagemBd = "";
 			if (this.imagem != null) {
-				File pastaDestino = new File("resources/img");
-				if (!pastaDestino.exists()) {
-					pastaDestino.mkdirs();
-				}
-				File arquivoDestino = new File(pastaDestino, imagem.getName());
-				Files.copy(imagem.toPath(), arquivoDestino.toPath(), StandardCopyOption.REPLACE_EXISTING);
-				imagemBd = "/resources/img/" + imagem.getName();
+			    String raizDoProjeto = System.getProperty("user.dir");
+			    File pastaDestino = new File(raizDoProjeto + File.separator + "resources" + File.separator + "img");
+
+			    if (!pastaDestino.exists()) {
+			        pastaDestino.mkdirs();
+			    }
+			    File arquivoDestino = new File(pastaDestino, imagem.getName());
+			    Files.copy(imagem.toPath(), arquivoDestino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			    imagemBd = "/resources/img/" + imagem.getName();
 			}
 			Usuario_Cerveja degustacao = new Usuario_Cerveja();
 			degustacao.setIdUsuario(user.getIdUsuario());
@@ -318,6 +320,7 @@ public class TelaCadastro extends JPanel {
 			UsuarioCervejaDAO con = new UsuarioCervejaDAO();
 			if (con.inserirDegustacao(degustacao)) {
 				JOptionPane.showMessageDialog(null, "Cadastro e imagem salvos com sucesso!");
+				reiniciarCampos();
 			}
 
 		} catch (IOException ex) {
@@ -326,6 +329,16 @@ public class TelaCadastro extends JPanel {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + ex.getMessage());
 		}
+	}
+	
+	public void reiniciarCampos() {
+		comboCerveja.setSelectedIndex(0);
+		txtData.setText("");
+		txtAvaliacao.setText("");
+		txtComentario.setText("");
+		txtSugestao.setText("");
+		txtLocal.setText("");
+		labelNomeImg.setText("");
 	}
 
 }

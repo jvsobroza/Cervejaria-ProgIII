@@ -33,18 +33,41 @@ public class Janela extends JFrame {
 	private JMenuItem subMenuListagemListaGeral;
 	private JMenuItem SubMenuListagemListarRotulos;
 	private JMenuItem SubMenuListagemListarEstatistica;
-	private ImageIcon iconeCadastro = carregarIcon("/resources/img/icones/perfil.png"); // https://www.flaticon.com/br/icones-gratis/individual ícones criados por Good Ware - Flaticon
-	private ImageIcon iconeListar = carregarIcon("/resources/img/icones/lista.png"); // https://www.flaticon.com/br/icones-gratis/lista-de-afazeres  Lista de afazeres ícones criados por bsd - Flaticon
-	private ImageIcon iconeSair = carregarIcon("/resources/img/icones/sair.png"); // https://www.flaticon.com/br/icones-gratis/sair Sair ícones criados por Iconpro86 - Flaticon
-	private ImageIcon iconeCerveja = carregarIcon("/resources/img/icones/cerveja.png"); // https://www.flaticon.com/br/icones-gratis/cerveja Cerveja ícones criados por Good Ware - Flaticon
-	private ImageIcon iconeListaEstatistica = carregarIcon("/resources/img/icones/estatistica.png"); // https://www.flaticon.com/br/icones-gratis/grafico-de-pizza Gráfico de pizza ícones criados por Andrean Prabowo - Flaticon
-	private ImageIcon iconeListaRotulo = carregarIcon("/resources/img/icones/rotulo.png"); // https://www.flaticon.com/br/icones-gratis/rotulo rótulo ícones Rótulo ícones criados por Good Ware - Flaticon
-	private ImageIcon iconeListaGeral = carregarIcon("/resources/img/icones/lista_geral.png"); // https://www.flaticon.com/br/icones-gratis/visao-geral Visão geral ícones criados por Vectorsclub
-	private ImageIcon iconeDeslogar = carregarIcon("/resources/img/icones/logout.png"); // https://www.flaticon.com/br/icones-gratis/saida Saída ícones criados por riajulislam - Flaticon
+	private ImageIcon iconeCadastro = carregarIcon("/resources/img/icones/perfil.png"); // https://www.flaticon.com/br/icones-gratis/individual
+																						// ícones criados por Good Ware
+																						// - Flaticon
+	private ImageIcon iconeListar = carregarIcon("/resources/img/icones/lista.png"); // https://www.flaticon.com/br/icones-gratis/lista-de-afazeres
+																						// Lista de afazeres ícones
+																						// criados por bsd - Flaticon
+	private ImageIcon iconeSair = carregarIcon("/resources/img/icones/sair.png"); // https://www.flaticon.com/br/icones-gratis/sair
+																					// Sair ícones criados por Iconpro86
+																					// - Flaticon
+	private ImageIcon iconeCerveja = carregarIcon("/resources/img/icones/cerveja.png"); // https://www.flaticon.com/br/icones-gratis/cerveja
+																						// Cerveja ícones criados por
+																						// Good Ware - Flaticon
+	private ImageIcon iconeListaEstatistica = carregarIcon("/resources/img/icones/estatistica.png"); // https://www.flaticon.com/br/icones-gratis/grafico-de-pizza
+																										// Gráfico de
+																										// pizza ícones
+																										// criados por
+																										// Andrean
+																										// Prabowo -
+																										// Flaticon
+	private ImageIcon iconeListaRotulo = carregarIcon("/resources/img/icones/rotulo.png"); // https://www.flaticon.com/br/icones-gratis/rotulo
+																							// rótulo ícones Rótulo
+																							// ícones criados por Good
+																							// Ware - Flaticon
+	private ImageIcon iconeListaGeral = carregarIcon("/resources/img/icones/lista_geral.png"); // https://www.flaticon.com/br/icones-gratis/visao-geral
+																								// Visão geral ícones
+																								// criados por
+																								// Vectorsclub
+	private ImageIcon iconeDeslogar = carregarIcon("/resources/img/icones/logout.png"); // https://www.flaticon.com/br/icones-gratis/saida
+																						// Saída ícones criados por
+																						// riajulislam - Flaticon
 	private static JMenu menuSair;
 	private JMenuItem subMenuSairDeslog;
 	private JMenu menuReturn;
 	public static Usuario us;
+
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +86,8 @@ public class Janela extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public Janela() throws IOException {
 		setBounds(100, 100, 1000, 600);
@@ -72,14 +96,14 @@ public class Janela extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+
 		this.menuBar = new JMenuBar();
 		setJMenuBar(this.menuBar);
-		
+
 		this.menuCadastro = new JMenu("Cadastro");
 		this.menuCadastro.setIcon(iconeCadastro);
 		this.menuBar.add(this.menuCadastro);
-		
+
 		this.subMenuCadastrarCerveja = new JMenuItem("Cadastrar Degustação");
 		this.subMenuCadastrarCerveja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -94,11 +118,11 @@ public class Janela extends JFrame {
 		});
 		this.subMenuCadastrarCerveja.setIcon(iconeCerveja);
 		this.menuCadastro.add(this.subMenuCadastrarCerveja);
-		
+
 		this.menuListagem = new JMenu("Listagem");
 		this.menuListagem.setIcon(iconeListar);
 		this.menuBar.add(this.menuListagem);
-		
+
 		this.subMenuListagemListaGeral = new JMenuItem("Lista Geral");
 		this.subMenuListagemListaGeral.setIcon(iconeListaGeral);
 		this.subMenuListagemListaGeral.addActionListener(new ActionListener() {
@@ -113,7 +137,7 @@ public class Janela extends JFrame {
 			}
 		});
 		this.menuListagem.add(this.subMenuListagemListaGeral);
-		
+
 		this.SubMenuListagemListarEstatistica = new JMenuItem("Listar Estatísticas");
 		this.SubMenuListagemListarEstatistica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,19 +145,21 @@ public class Janela extends JFrame {
 		});
 		this.SubMenuListagemListarEstatistica.setIcon(iconeListaEstatistica);
 		this.menuListagem.add(this.SubMenuListagemListarEstatistica);
-		
+
 		this.SubMenuListagemListarRotulos = new JMenuItem("Listar Rótulos");
 		this.SubMenuListagemListarRotulos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setContentPane(new TelaGaleria(us));
+				setVisible(true);
 			}
 		});
 		this.SubMenuListagemListarRotulos.setIcon(iconeListaRotulo);
 		this.menuListagem.add(this.SubMenuListagemListarRotulos);
-		
+
 		this.menuSair = new JMenu("Sair");
 		this.menuSair.setIcon(iconeSair);
 		this.menuBar.add(this.menuSair);
-		
+
 		this.subMenuSairDeslog = new JMenuItem("Deslogar");
 		this.subMenuSairDeslog.setIcon(iconeDeslogar);
 		this.subMenuSairDeslog.addActionListener(new ActionListener() {
@@ -150,7 +176,7 @@ public class Janela extends JFrame {
 			}
 		});
 		this.menuSair.add(this.subMenuSairDeslog);
-		
+
 		this.menuReturn = new JMenu("Retornar");
 		this.menuReturn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -163,8 +189,7 @@ public class Janela extends JFrame {
 						e1.printStackTrace();
 					}
 					setVisible(true);
-				}
-				else {
+				} else {
 					try {
 						setContentPane(new TelaLogin());
 						setVisible(true);
@@ -181,23 +206,23 @@ public class Janela extends JFrame {
 		setMenusHabilitados(false);
 
 	}
-	
+
 	private ImageIcon carregarIcon(String caminho) {
 		ImageIcon icone = new ImageIcon(getClass().getResource(caminho));
 		Image img = icone.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
 	}
-	
+
 	public void setMenusHabilitados(boolean ds) {
 		this.menuCadastro.setEnabled(ds);
 		this.menuListagem.setEnabled(ds);
 		this.menuSair.setEnabled(ds);
 	}
-	
+
 	public static void setUsuario(Usuario user) {
 		us = user;
 	}
-	
+
 	public static void ativarMenus() {
 		menuCadastro.setEnabled(true);
 		menuListagem.setEnabled(true);

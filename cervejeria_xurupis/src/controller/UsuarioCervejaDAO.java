@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 import com.mysql.jdbc.Connection;
 
+import model.Cerveja;
 import model.Degustacao;
 import model.Usuario;
 import model.Usuario_Cerveja;
@@ -69,4 +70,84 @@ public class UsuarioCervejaDAO {
 		}
 		return ls;
 	}
+
+	public LinkedList<Degustacao> listarDegustacaoTipo(Usuario user, String tipo) {
+		LinkedList<Degustacao> ls = new LinkedList<Degustacao>();
+		String sql = "SELECT usuario_cerveja.*, cerveja.nome FROM usuario_cerveja INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja AND cerveja.tipo = ? WHERE id_usuario = ? ";
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setString(1, tipo);
+			ps.setInt(2, user.getIdUsuario());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Degustacao degustacao = new Degustacao();
+				degustacao.setId_usuario_cerveja(rs.getInt("id_cerveja_usuario"));
+				degustacao.setNome_cerveja(rs.getString("cerveja.nome"));
+				degustacao.setAvaliacao(rs.getInt("avaliacao"));
+				degustacao.setData_degustacao(rs.getDate("data_degustacao"));
+				degustacao.setLocal_degustacao(rs.getString("local_degustacao"));
+				degustacao.setCritica(rs.getString("critica"));
+				degustacao.setSugestao(rs.getString("sugestao"));
+				degustacao.setFoto(rs.getString("foto"));
+				System.out.println(degustacao.toString());
+				ls.add(degustacao);
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return ls;
+	}
+
+	public LinkedList<Degustacao> listarDegustacaoNota(Usuario user) {
+		LinkedList<Degustacao> ls = new LinkedList<Degustacao>();
+		String sql = "SELECT usuario_cerveja.*, cerveja.nome FROM usuario_cerveja INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja WHERE id_usuario = ? ORDER BY avaliacao DESC";
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setInt(1, user.getIdUsuario());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Degustacao degustacao = new Degustacao();
+				degustacao.setId_usuario_cerveja(rs.getInt("id_cerveja_usuario"));
+				degustacao.setNome_cerveja(rs.getString("cerveja.nome"));
+				degustacao.setAvaliacao(rs.getInt("avaliacao"));
+				degustacao.setData_degustacao(rs.getDate("data_degustacao"));
+				degustacao.setLocal_degustacao(rs.getString("local_degustacao"));
+				degustacao.setCritica(rs.getString("critica"));
+				degustacao.setSugestao(rs.getString("sugestao"));
+				degustacao.setFoto(rs.getString("foto"));
+				System.out.println(degustacao.toString());
+				ls.add(degustacao);
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return ls;
+	}
+
+	public LinkedList<Degustacao> listarDegustacaoData(Usuario user) {
+		LinkedList<Degustacao> ls = new LinkedList<Degustacao>();
+		String sql = "SELECT usuario_cerveja.*, cerveja.nome FROM usuario_cerveja INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja WHERE id_usuario = ? ORDER BY data_degustacao DESC";
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setInt(1, user.getIdUsuario());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Degustacao degustacao = new Degustacao();
+				degustacao.setId_usuario_cerveja(rs.getInt("id_cerveja_usuario"));
+				degustacao.setNome_cerveja(rs.getString("cerveja.nome"));
+				degustacao.setAvaliacao(rs.getInt("avaliacao"));
+				degustacao.setData_degustacao(rs.getDate("data_degustacao"));
+				degustacao.setLocal_degustacao(rs.getString("local_degustacao"));
+				degustacao.setCritica(rs.getString("critica"));
+				degustacao.setSugestao(rs.getString("sugestao"));
+				degustacao.setFoto(rs.getString("foto"));
+				System.out.println(degustacao.toString());
+				ls.add(degustacao);
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return ls;
+	}
+
 }

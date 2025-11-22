@@ -1,0 +1,111 @@
+INSERT INTO cerveja (nome, tipo, teor_alcolico, ibu, pais) VALUES 
+
+-- --- PILSEN (Geralmente as nacionais de massa ou artesanais leves) ---
+('Brahma Chopp', 'Pilsen', 4.8, 10, 'Brasil'),
+('Skol', 'Pilsen', 4.7, 8, 'Brasil'),
+('Antarctica Original', 'Pilsen', 5.0, 13, 'Brasil'),
+('Eisenbahn Pilsen', 'Pilsen', 4.8, 11, 'Brasil'),
+('Baden Baden Cristal', 'Pilsen', 5.0, 13, 'Brasil'),
+('Bohemia Imperial', 'Pilsen', 5.2, 18, 'Brasil'),
+('Itaipava Premium', 'Pilsen', 4.8, 12, 'Brasil'),
+('Serramalte', 'Pilsen', 5.5, 14, 'Brasil'),
+('Cacildis', 'Pilsen', 4.6, 16, 'Brasil'),
+('Proibida Puro Malte', 'Pilsen', 4.9, 12, 'Brasil'),
+
+-- --- LAGER (Premium Lagers, Internacionais) ---
+('Heineken', 'Lager', 5.0, 19, 'Holanda'),
+('Stella Artois', 'Lager', 5.0, 24, 'Bélgica'),
+('Corona Extra', 'Lager', 4.5, 18, 'México'),
+('Budweiser', 'Lager', 5.0, 12, 'EUA'),
+('Spaten Munchen', 'Lager', 5.2, 21, 'Alemanha'),
+('Beck''s', 'Lager', 5.0, 20, 'Alemanha'),
+('Amstel', 'Lager', 4.7, 18, 'Holanda'),
+('Estrella Galicia', 'Lager', 4.7, 25, 'Espanha'),
+('Miller Genuine Draft', 'Lager', 4.7, 12, 'EUA'),
+('Kirin Ichiban', 'Lager', 5.0, 18, 'Japão'),
+('Asahi Super Dry', 'Lager', 5.0, 20, 'Japão'),
+('Peroni Nastro Azzurro', 'Lager', 5.1, 24, 'Itália'),
+
+-- --- IPA (India Pale Ale) ---
+('Goose Island IPA', 'IPA (India Pale Ale)', 5.9, 55, 'EUA'),
+('Lagunitas IPA', 'IPA (India Pale Ale)', 6.2, 51, 'EUA'),
+('BrewDog Punk IPA', 'IPA (India Pale Ale)', 5.6, 35, 'Escócia'),
+('Colorado Indica', 'IPA (India Pale Ale)', 7.0, 45, 'Brasil'),
+('Colorado Vixnu', 'IPA (India Pale Ale)', 9.5, 75, 'Brasil'),
+('Eisenbahn IPA', 'IPA (India Pale Ale)', 6.9, 50, 'Brasil'),
+('Baden Baden IPA', 'IPA (India Pale Ale)', 6.4, 48, 'Brasil'),
+('Roleta Russa Easy IPA', 'IPA (India Pale Ale)', 4.6, 30, 'Brasil'),
+('Roleta Russa Imperial IPA', 'IPA (India Pale Ale)', 8.2, 120, 'Brasil'),
+('Dogma Touro Sentado', 'IPA (India Pale Ale)', 6.5, 60, 'Brasil'),
+('Schornstein IPA', 'IPA (India Pale Ale)', 6.5, 45, 'Brasil'),
+('Stone IPA', 'IPA (India Pale Ale)', 6.9, 71, 'EUA'),
+('Brooklyn East IPA', 'IPA (India Pale Ale)', 6.9, 47, 'EUA'),
+
+-- --- WEISS (Trigo) ---
+('Erdinger Weissbier', 'Weiss (Trigo)', 5.3, 13, 'Alemanha'),
+('Paulaner Hefe-Weissbier', 'Weiss (Trigo)', 5.5, 12, 'Alemanha'),
+('Franziskaner', 'Weiss (Trigo)', 5.0, 12, 'Alemanha'),
+('Weihenstephaner', 'Weiss (Trigo)', 5.4, 14, 'Alemanha'),
+('Colorado Appia', 'Weiss (Trigo)', 5.5, 10, 'Brasil'),
+('Eisenbahn Weizenbier', 'Weiss (Trigo)', 4.8, 10, 'Brasil'),
+('Baden Baden Weiss', 'Weiss (Trigo)', 5.2, 12, 'Brasil'),
+('Patagonia Weisse', 'Weiss (Trigo)', 4.2, 10, 'Argentina'),
+('Schneider Weisse Tap 7', 'Weiss (Trigo)', 5.4, 14, 'Alemanha'),
+('Schornstein Weiss', 'Weiss (Trigo)', 5.0, 10, 'Brasil'),
+
+-- --- WITBIER (Trigo Belga com temperos) ---
+('Hoegaarden', 'Witbier', 4.9, 15, 'Bélgica'),
+('Blue Moon', 'Witbier', 5.4, 9, 'EUA'),
+('Vedett Extra White', 'Witbier', 4.7, 15, 'Bélgica'),
+('Wals Witte', 'Witbier', 5.0, 20, 'Brasil'),
+('Praya', 'Witbier', 5.3, 13, 'Brasil'),
+('Baden Baden Witbier', 'Witbier', 4.9, 11, 'Brasil'),
+('Leopoldina Witbier', 'Witbier', 5.0, 13, 'Brasil'),
+
+-- --- STOUT / ESCURA (Incluindo Porters e Dunkels) ---
+('Guinness Draught', 'Stout / Escura', 4.2, 45, 'Irlanda'),
+('Murphy''s Irish Stout', 'Stout / Escura', 4.0, 34, 'Irlanda'),
+('Caracu', 'Stout / Escura', 5.4, 25, 'Brasil'),
+('Colorado Demoiselle', 'Stout / Escura', 6.0, 22, 'Brasil'),
+('Baden Baden Stout', 'Stout / Escura', 7.5, 30, 'Brasil'),
+('Eisenbahn Dunkel', 'Stout / Escura', 4.8, 14, 'Brasil'),
+('Xingu Black', 'Stout / Escura', 4.6, 18, 'Brasil'),
+('Founders Breakfast Stout', 'Stout / Escura', 8.3, 60, 'EUA'),
+('Fuller''s London Porter', 'Stout / Escura', 5.4, 30, 'Inglaterra'),
+('Petra Escura', 'Stout / Escura', 4.4, 10, 'Brasil'),
+
+-- --- RED ALE ---
+('Baden Baden Red Ale', 'Red Ale', 9.2, 25, 'Brasil'),
+('Leopoldina Red Ale', 'Red Ale', 6.5, 30, 'Brasil'),
+('Eisenbahn Red Ale', 'Red Ale', 4.8, 23, 'Brasil'), -- Às vezes rotulada como Pale Ale, mas avermelhada
+('Kilkenny', 'Red Ale', 4.3, 29, 'Irlanda'),
+('Murphy''s Irish Red', 'Red Ale', 5.0, 20, 'Irlanda'),
+('Old Speckled Hen', 'Red Ale', 5.2, 30, 'Inglaterra'),
+('Wals Petrius', 'Red Ale', 6.5, 25, 'Brasil'), -- Strong Red
+
+-- --- SOUR / FRUIT BEER ---
+('Liefmans Fruitesse', 'Sour / Fruit Beer', 3.8, 5, 'Bélgica'),
+('Boon Kriek', 'Sour / Fruit Beer', 4.0, 10, 'Bélgica'),
+('Catharina Sour Bergamota', 'Sour / Fruit Beer', 4.0, 5, 'Brasil'),
+('Dádiva Pink Lemonade', 'Sour / Fruit Beer', 4.4, 5, 'Brasil'),
+('Lohn Bier Catharina Sour Uva', 'Sour / Fruit Beer', 4.0, 5, 'Brasil'),
+('Lindemans Framboise', 'Sour / Fruit Beer', 2.5, 12, 'Bélgica'),
+('Dogma Sourmind', 'Sour / Fruit Beer', 4.4, 5, 'Brasil'),
+
+-- --- SEM ÁLCOOL ---
+('Heineken 0.0', 'Sem Álcool', 0.0, 15, 'Holanda'),
+('Budweiser Zero', 'Sem Álcool', 0.0, 10, 'EUA'),
+('Brahma 0.0', 'Sem Álcool', 0.0, 8, 'Brasil'),
+('Kronenbier', 'Sem Álcool', 0.0, 8, 'Brasil'),
+('Erdinger Alkoholfrei', 'Sem Álcool', 0.5, 10, 'Alemanha'),
+('Estrella Galicia 0,0', 'Sem Álcool', 0.0, 12, 'Espanha'),
+
+-- --- OUTROS (Belgas fortes, Pale Ales, etc) ---
+('Leffe Blonde', 'Outros', 6.6, 20, 'Bélgica'),
+('Duvel', 'Outros', 8.5, 32, 'Bélgica'),
+('Delirium Tremens', 'Outros', 8.5, 26, 'Bélgica'),
+('La Trappe Quadrupel', 'Outros', 10.0, 22, 'Holanda'),
+('Eisenbahn Pale Ale', 'Outros', 4.8, 23, 'Brasil'),
+('Fuller''s London Pride', 'Outros', 4.7, 30, 'Inglaterra'),
+('Colorado Murica', 'Outros', 4.7, 20, 'Brasil'),
+('Wals Dubbel', 'Outros', 7.5, 26, 'Brasil');
