@@ -149,5 +149,74 @@ public class UsuarioCervejaDAO {
 		}
 		return ls;
 	}
+	
+	public LinkedList<Degustacao> listarParaGaleria(Usuario user) {
+		LinkedList<Degustacao> ls = new LinkedList<Degustacao>();
+		String sql = "SELECT usuario_cerveja.*, cerveja.nome FROM usuario_cerveja INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja WHERE id_usuario = ? ORDER BY data_degustacao DESC";
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setInt(1, user.getIdUsuario());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Degustacao degustacao = new Degustacao();
+				degustacao.setNome_cerveja(rs.getString("cerveja.nome"));
+				degustacao.setData_degustacao(rs.getDate("data_degustacao"));
+				degustacao.setFoto(rs.getString("foto"));
+				ls.add(degustacao);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return ls;
+	}
+
+	public ResultSet getRanking(Usuario user) {
+		String sql = "SELECT cerveja.nome, usuario_cerveja.avaliacao, cerveja.tipo " +
+					 "FROM usuario_cerveja " +
+					 "INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja " +
+					 "WHERE usuario_cerveja.id_usuario = ? " +
+					 "ORDER BY usuario_cerveja.avaliacao DESC ";
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setInt(1, user.getIdUsuario());
+			return ps.executeQuery();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	public ResultSet getMediaPorTipo(Usuario user) {
+		String sql = "SELECT cerveja.tipo, ROUND(AVG(usuario_cerveja.avaliacao), 1) as media " +
+					 "FROM usuario_cerveja " +
+					 "INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja " +
+					 "WHERE usuario_cerveja.id_usuario = ? " +
+					 "GROUP BY cerveja.tipo " +
+					 "ORDER BY media DESC";
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setInt(1, user.getIdUsuario());
+			return ps.executeQuery();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+	public ResultSet getContagemPorMes(Usuario user) {
+		String sql = "SELECT CONCAT(MONTH(usuario_cerveja.data_degustacao), '/', YEAR(usuario_cerveja.data_degustacao)) as mes_ano, " +
+					 "COUNT(*) as total " +
+					 "FROM usuario_cerveja " +
+					 "WHERE usuario_cerveja.id_usuario = ? " +
+					 "GROUP BY YEAR(usuario_cerveja.data_degustacao), MONTH(usuario_cerveja.data_degustacao) " +
+					 "ORDER BY YEAR(usuario_cerveja.data_degustacao) DESC, MONTH(usuario_cerveja.data_degustacao) DESC";
+		try {
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setInt(1, user.getIdUsuario());
+			return ps.executeQuery();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 
 }
