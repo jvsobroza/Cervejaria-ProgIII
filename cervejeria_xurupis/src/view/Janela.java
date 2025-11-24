@@ -141,6 +141,13 @@ public class Janela extends JFrame {
 		this.SubMenuListagemListarEstatistica = new JMenuItem("Listar Estatísticas");
 		this.SubMenuListagemListarEstatistica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					setContentPane(new TelaRankingCervejas(us));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				setVisible(true);
 			}
 		});
 		this.SubMenuListagemListarEstatistica.setIcon(iconeListaEstatistica);

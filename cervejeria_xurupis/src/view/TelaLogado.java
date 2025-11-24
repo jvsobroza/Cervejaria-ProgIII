@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.UsuarioCervejaDAO;
 import model.Usuario;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Font;
@@ -21,6 +22,8 @@ public class TelaLogado extends JPanel {
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
+	private JLabel labelQuantiDegu;
+	private UsuarioCervejaDAO conDegu;
 
 	/**
 	 * Create the panel.
@@ -28,12 +31,14 @@ public class TelaLogado extends JPanel {
 	 */
 	public TelaLogado(Usuario user) throws IOException {
 		this.user = user;
+		conDegu = new UsuarioCervejaDAO();
 		initComponents();
+		labelQuantiDegu.setText("Quantidade de degustações esse mes: " + conDegu.getContagemMes(user));
 	}
 	private void initComponents() throws IOException {
 		setBackground(new Color(230, 205, 153));
 		setBounds(100, 100, 1000, 600);
-		setLayout(new MigLayout("", "[grow][grow]", "[][][grow]"));
+		setLayout(new MigLayout("", "[grow][grow]", "[][][][grow]"));
 		
 		this.lblNewLabel = new JLabel("Seja bem vindo novamente");
 		this.lblNewLabel.setText("Seja bem vindo novamente " + user.getNome() + "!");
@@ -48,6 +53,10 @@ public class TelaLogado extends JPanel {
 		this.lblNewLabel_1 = new JLabel("Aproveite o menu para realizar as ações na melhor cervejaria da America Látina");
 		this.lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(this.lblNewLabel_1, "cell 0 1");
+		
+		this.labelQuantiDegu = new JLabel("Quantidade de degustações esse mes:");
+		this.labelQuantiDegu.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		add(this.labelQuantiDegu, "cell 0 2");
 	}
 	
 

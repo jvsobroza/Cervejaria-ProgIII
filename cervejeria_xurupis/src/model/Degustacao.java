@@ -14,6 +14,16 @@ public class Degustacao {
 	private String critica;
 	private String foto;
 	private String sugestao;
+	private String tipo;
+	private double media;
+
+	public double getMedia() {
+		return media;
+	}
+
+	public void setMedia(double media) {
+		this.media = media;
+	}
 
 	public Degustacao() {
 	}
@@ -33,6 +43,14 @@ public class Degustacao {
 		this.critica = critica;
 		this.foto = foto;
 		this.sugestao = sugestao;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public int getId_usuario() {
@@ -129,6 +147,5 @@ public class Degustacao {
 				+ ", data_degustacao=" + data_degustacao + ", local_degustacao=" + local_degustacao + ", avaliacao="
 				+ avaliacao + ", critica=" + critica + ", foto=" + foto + ", sugestao=" + sugestao + "]";
 	}
-	
 
 }

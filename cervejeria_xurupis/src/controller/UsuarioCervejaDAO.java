@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
@@ -44,8 +45,8 @@ public class UsuarioCervejaDAO {
 		}
 		return false;
 	}
-	
-	public LinkedList<Degustacao> listarDegustacao(Usuario user){
+
+	public LinkedList<Degustacao> listarDegustacao(Usuario user) {
 		LinkedList<Degustacao> ls = new LinkedList<>();
 		String sql = "SELECT usuario_cerveja.*, cerveja.nome FROM usuario_cerveja INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja WHERE id_usuario = ?";
 		try {
@@ -65,7 +66,7 @@ public class UsuarioCervejaDAO {
 				System.out.println(degustacao.toString());
 				ls.add(degustacao);
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return ls;
@@ -92,7 +93,7 @@ public class UsuarioCervejaDAO {
 				System.out.println(degustacao.toString());
 				ls.add(degustacao);
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return ls;
@@ -118,7 +119,7 @@ public class UsuarioCervejaDAO {
 				System.out.println(degustacao.toString());
 				ls.add(degustacao);
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return ls;
@@ -144,12 +145,12 @@ public class UsuarioCervejaDAO {
 				System.out.println(degustacao.toString());
 				ls.add(degustacao);
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return ls;
 	}
-	
+
 	public LinkedList<Degustacao> listarParaGaleria(Usuario user) {
 		LinkedList<Degustacao> ls = new LinkedList<Degustacao>();
 		String sql = "SELECT usuario_cerveja.*, cerveja.nome FROM usuario_cerveja INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja WHERE id_usuario = ? ORDER BY data_degustacao DESC";
@@ -170,53 +171,77 @@ public class UsuarioCervejaDAO {
 		return ls;
 	}
 
-	public ResultSet getRanking(Usuario user) {
-		String sql = "SELECT cerveja.nome, usuario_cerveja.avaliacao, cerveja.tipo " +
-					 "FROM usuario_cerveja " +
+	public LinkedList<Degustacao> getRanking(Usuario user) {
+		LinkedList<Degustacao> lista = new LinkedList<>();
+		String sql = "SELECT cerveja.nome, usuario_cerveja.avaliacao, cerveja.tipo FROM usuario_cerveja " +
 					 "INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja " +
-					 "WHERE usuario_cerveja.id_usuario = ? " +
-					 "ORDER BY usuario_cerveja.avaliacao DESC ";
+					 "WHERE usuario_cerveja.id_usuario = ? " + 
+					 "ORDER BY usuario_cerveja.avaliacao DESC";
 		try {
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setInt(1, user.getIdUsuario());
-			return ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Degustacao degu = new Degustacao();
+				degu.setNome_cerveja(rs.getString("nome"));
+				degu.setAvaliacao(rs.getInt("avaliacao"));
+				degu.setTipo(rs.getString("tipo")); 				
+				lista.add(degu);
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return null;
 		}
-	}
-	public ResultSet getMediaPorTipo(Usuario user) {
-		String sql = "SELECT cerveja.tipo, ROUND(AVG(usuario_cerveja.avaliacao), 1) as media " +
-					 "FROM usuario_cerveja " +
-					 "INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja " +
-					 "WHERE usuario_cerveja.id_usuario = ? " +
-					 "GROUP BY cerveja.tipo " +
-					 "ORDER BY media DESC";
-		try {
-			PreparedStatement ps = conexao.prepareStatement(sql);
-			ps.setInt(1, user.getIdUsuario());
-			return ps.executeQuery();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
+		
+		return lista;
 	}
 
-	public ResultSet getContagemPorMes(Usuario user) {
-		String sql = "SELECT CONCAT(MONTH(usuario_cerveja.data_degustacao), '/', YEAR(usuario_cerveja.data_degustacao)) as mes_ano, " +
-					 "COUNT(*) as total " +
-					 "FROM usuario_cerveja " +
-					 "WHERE usuario_cerveja.id_usuario = ? " +
-					 "GROUP BY YEAR(usuario_cerveja.data_degustacao), MONTH(usuario_cerveja.data_degustacao) " +
-					 "ORDER BY YEAR(usuario_cerveja.data_degustacao) DESC, MONTH(usuario_cerveja.data_degustacao) DESC";
+
+	public LinkedList<Degustacao> getMediaPorTipo(Usuario user) {
+        LinkedList<Degustacao> lista = new LinkedList<>();
+        String sql = "SELECT cerveja.tipo, ROUND(AVG(usuario_cerveja.avaliacao), 1) as media " +
+                     "FROM usuario_cerveja INNER JOIN cerveja ON cerveja.id_cerveja = usuario_cerveja.id_cerveja " +
+                     "WHERE usuario_cerveja.id_usuario = ? " +
+                     "GROUP BY cerveja.tipo " +
+                     "ORDER BY media DESC";
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setInt(1, user.getIdUsuario());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Degustacao degu = new Degustacao();
+                degu.setTipo(rs.getString("tipo"));
+                degu.setMedia(rs.getDouble("media"));
+                lista.add(degu);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+
+	public int getContagemMes(Usuario user) {
+		LocalDate hoje = LocalDate.now();
+		int mes = hoje.getMonthValue();
+		int ano = hoje.getYear();
+		String sql = "SELECT COUNT(*) as total FROM usuario_cerveja " + "WHERE id_usuario = ? "
+				+ "AND MONTH(data_degustacao) = ? AND YEAR(data_degustacao) = ?";
 		try {
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setInt(1, user.getIdUsuario());
-			return ps.executeQuery();
+			ps.setInt(2, mes);
+			ps.setInt(3, ano);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getInt("total");
+			}
+
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
+			System.out.println("Erro ao contar mês atual: " + e.getMessage());
 		}
+
+		return 0;
 	}
 
 }
