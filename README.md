@@ -9,6 +9,9 @@
   CREATE TABLE `cervejaria`.`usuario` (`id_usuario` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(50) NOT NULL , `email` VARCHAR(50) UNIQUE NOT NULL , `senha` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id_usuario`));
+* Trigger tabela Usuario:
+  ```bash
+  CREATE TRIGGER apagar_usuario BEFORE delete ON usuario FOR EACH ROW BEGIN DELETE FROM usuario_cerveja WHERE usuario_cerveja.id_usuario = OLD.id_usuario; END
 * Tabela Cerveja:
   ```bash
   CREATE TABLE `cerveja` ( `id_cerveja` INT NOT NULL AUTO_INCREMENT , `nome` VARCHAR(50) NOT NULL ,
