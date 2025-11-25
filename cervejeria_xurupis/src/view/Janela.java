@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.UsuarioDAO;
 import model.Usuario;
 
 import javax.swing.JMenuBar;
@@ -34,8 +35,9 @@ public class Janela extends JFrame {
 	private JMenuItem SubMenuListagemListarRotulos;
 	private JMenuItem SubMenuListagemListarEstatistica;
 	private ImageIcon iconeCadastro = carregarIcon("/resources/img/icones/cadastrar.png"); // https://www.flaticon.com/br/icones-gratis/tampa-de-garrafa
-																						// Tampa de garrafa
-																						// ícones criados por Freepik 
+																							// Tampa de garrafa
+																							// ícones criados por
+																							// Freepik
 	private ImageIcon iconeListar = carregarIcon("/resources/img/icones/lista.png"); // https://www.flaticon.com/br/icones-gratis/lista-de-afazeres
 																						// Lista de afazeres ícones
 																						// criados por bsd - Flaticon
@@ -66,7 +68,15 @@ public class Janela extends JFrame {
 	private ImageIcon iconePerfil = carregarIcon("/resources/img/icones/perfil.png"); // https://www.flaticon.com/br/icones-gratis/perfil-de-usuario
 																						// Perfil de usuário
 																						// ícones criados por Anggara
-
+	private ImageIcon iconePerfilEditar = carregarIcon("/resources/img/icones/perfil_editar.png"); // https://www.flaticon.com/br/icones-gratis/ferramenta-de-edicao
+																									// Ferramenta de
+																									// edição
+																									// ícones criados
+																									// por Icongeek26
+	private ImageIcon iconePerfilApagar = carregarIcon("/resources/img/icones/perfil_apagar.png"); // https://www.flaticon.com/br/icones-gratis/deixar-de-seguir
+																									// Deixar de seguir
+																									// ícones criados
+																									// por riajulislam
 	private static JMenu menuSair;
 	private JMenuItem subMenuSairDeslog;
 	private JMenu menuReturn;
@@ -181,15 +191,44 @@ public class Janela extends JFrame {
 		this.menuBar.add(this.menuPerfil);
 
 		this.subMenuPerfilAlterar = new JMenuItem("Alterar perfil");
+		this.subMenuPerfilAlterar.setIcon(iconePerfilEditar);
 		this.subMenuPerfilAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					setContentPane(new TelaEditarUsuario(us));
+					setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		this.menuPerfil.add(this.subMenuPerfilAlterar);
 
 		this.subMenuApagarPerfil = new JMenuItem("Apagar perfil");
+		this.subMenuApagarPerfil.setIcon(iconePerfilApagar);
 		this.subMenuApagarPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String[] options = { "Sim", "Não" };
+				int response = JOptionPane.showOptionDialog(null, "Apagar conta?", "Apagar conta",
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, null);
+				if (response == JOptionPane.YES_OPTION) {
+					JOptionPane.showMessageDialog(null, "Conta excluída com sucesso!", "Exclusão", JOptionPane.INFORMATION_MESSAGE, null);
+					try {
+						apagarUsuario();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					us = new Usuario();
+					try {
+						setContentPane(new TelaLogin());
+						setVisible(true);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 		this.menuPerfil.add(this.subMenuApagarPerfil);
@@ -267,6 +306,11 @@ public class Janela extends JFrame {
 		menuListagem.setEnabled(true);
 		menuSair.setEnabled(true);
 		menuPerfil.setEnabled(true);
+	}
+	
+	public void apagarUsuario() throws IOException {
+		UsuarioDAO conUser = new UsuarioDAO();
+		conUser.apagarUsuario(us);
 	}
 
 }

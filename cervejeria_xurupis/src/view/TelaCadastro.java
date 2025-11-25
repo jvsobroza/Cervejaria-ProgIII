@@ -24,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
+import action.TratadorErros;
 import controller.CervejaDAO;
 import controller.UsuarioCervejaDAO;
 
@@ -267,8 +268,6 @@ public class TelaCadastro extends JPanel {
 	}
 
 	public void inserirDegustacao() {
-		System.out.println(this.txtData.getDate());
-
 		try {
 			String imagemBd = "";
 			if (this.imagem != null) {
@@ -298,11 +297,10 @@ public class TelaCadastro extends JPanel {
 				reiniciarCampos();
 			}
 
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "Erro ao mover a imagem: " + ex.getMessage());
+		} catch (IOException e) {
+			TratadorErros.mensagemErro("Erro Imagem;Erro mover imagem: " + e.getMessage());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
+			TratadorErros.mensagemErro("Erro Cadastro;Erro cadastrar imagem: " + e.getMessage());
 		}
 	}
 	

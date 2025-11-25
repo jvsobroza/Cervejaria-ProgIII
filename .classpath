@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="cervejeria_xurupis/src/mysql-connector-java-5.1.36-bin.jar"/>
 	<classpathentry kind="lib" path="cervejeria_xurupis/src/jBCrypt-0.4.jar"/>
 	<classpathentry kind="lib" path="cervejeria_xurupis/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.forms_1.9.0.v20240327-0800.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.common_1.8.1.v20240327-0800.jar"/>
 	<classpathentry kind="output" path="cervejeria_xurupis/bin"/>
 </classpath>

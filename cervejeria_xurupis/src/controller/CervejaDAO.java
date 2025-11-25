@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.mysql.jdbc.Connection;
+
+import action.TratadorErros;
 import model.Cerveja;
 public class CervejaDAO {
 	private Connection conexao;
@@ -31,11 +33,10 @@ public class CervejaDAO {
 				ceva.setIbu(rs.getInt("ibu"));
 				ceva.setTeorAlcolico(rs.getDouble("teor_alcolico"));
 				ceva.setTipo(rs.getString("tipo"));
-				System.out.println(ceva.toString());
 				ls.add(ceva);
 			}
 		}catch(SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar cervejas: " + e.getMessage());
 		}
 		return ls;
 	}

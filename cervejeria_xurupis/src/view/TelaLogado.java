@@ -55,7 +55,7 @@ public class TelaLogado extends JPanel {
 		add(this.lblNewLabel_1, "cell 0 1");
 		
 		this.labelQuantiDegu = new JLabel("Quantidade de degustações esse mes:");
-		this.labelQuantiDegu.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		this.labelQuantiDegu.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		add(this.labelQuantiDegu, "cell 0 2");
 	}
 	

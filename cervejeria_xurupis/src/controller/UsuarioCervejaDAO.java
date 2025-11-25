@@ -13,6 +13,7 @@ import java.util.LinkedList;
 
 import com.mysql.jdbc.Connection;
 
+import action.TratadorErros;
 import model.Cerveja;
 import model.Degustacao;
 import model.Usuario;
@@ -40,7 +41,7 @@ public class UsuarioCervejaDAO {
 			ps.execute();
 			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Inserir;Erro inserir degustação: " + e.getMessage());
 		}
 		return false;
 	}
@@ -65,7 +66,7 @@ public class UsuarioCervejaDAO {
 				ls.add(degustacao);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar degustações: " + e.getMessage());
 		}
 		return ls;
 	}
@@ -92,7 +93,7 @@ public class UsuarioCervejaDAO {
 				ls.add(degustacao);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar degustações: " + e.getMessage());
 		}
 		return ls;
 	}
@@ -118,7 +119,7 @@ public class UsuarioCervejaDAO {
 				ls.add(degustacao);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar degustações: " + e.getMessage());
 		}
 		return ls;
 	}
@@ -144,7 +145,7 @@ public class UsuarioCervejaDAO {
 				ls.add(degustacao);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar degustações: " + e.getMessage());
 		}
 		return ls;
 	}
@@ -164,7 +165,7 @@ public class UsuarioCervejaDAO {
 				ls.add(degustacao);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar degustações: " + e.getMessage());
 		}
 		return ls;
 	}
@@ -187,7 +188,7 @@ public class UsuarioCervejaDAO {
 				lista.add(degu);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar degustações: " + e.getMessage());
 		}
 		
 		return lista;
@@ -212,7 +213,7 @@ public class UsuarioCervejaDAO {
                 lista.add(degu);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar degustações: " + e.getMessage());
         }
         return lista;
     }
@@ -236,7 +237,7 @@ public class UsuarioCervejaDAO {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Erro ao contar mês atual: " + e.getMessage());
+			TratadorErros.mensagemErro("Erro Listagem;Erro listar contagem: " + e.getMessage());
 		}
 
 		return 0;
