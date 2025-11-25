@@ -18,7 +18,7 @@ public class CervejaDAO {
 	
 	public LinkedList<Cerveja> selectCerveja(){
 		LinkedList ls = new LinkedList<>();
-		String sql = "SELECT * FROM cerveja ORDER BY tipo";
+		String sql = "SELECT * FROM cerveja ORDER BY nome";
 		try {
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

@@ -1,12 +1,14 @@
 package model;
 
+import java.util.Date;
+
 public class Usuario_Cerveja {
 	private int idCervejaUsuario;
 	private int idUsuario;
 	private int idCerveja;
-	private String dataDegustacao;
+	private Date dataDegustacao;
 	private String localDegustacao;
-	private int Avaliacao;
+	private int avaliacao;
 	private String critica;
 	private String foto;
 	private String sugestao;
@@ -22,20 +24,20 @@ public class Usuario_Cerveja {
 	public Usuario_Cerveja() {
 	}
 
-	public Usuario_Cerveja(int idUsuario, int idCerveja, String dataDegustacao, String localDegustacao, int avaliacao,
+	public Usuario_Cerveja(int idUsuario, int idCerveja, Date dataDegustacao, String localDegustacao, int avaliacao,
 			String critica, String foto, String sugestao) {
 		super();
 		this.idUsuario = idUsuario;
 		this.idCerveja = idCerveja;
 		this.dataDegustacao = dataDegustacao;
 		this.localDegustacao = localDegustacao;
-		Avaliacao = avaliacao;
+		this.avaliacao = avaliacao;
 		this.critica = critica;
 		this.foto = foto;
 		this.sugestao = sugestao;
 	}
 
-	public Usuario_Cerveja(int idCervejaUsuario, int idUsuario, int idCerveja, String dataDegustacao,
+	public Usuario_Cerveja(int idCervejaUsuario, int idUsuario, int idCerveja, Date dataDegustacao,
 			String localDegustacao, int avaliacao, String critica, String foto, String sugestao) {
 		super();
 		this.idCervejaUsuario = idCervejaUsuario;
@@ -43,7 +45,7 @@ public class Usuario_Cerveja {
 		this.idCerveja = idCerveja;
 		this.dataDegustacao = dataDegustacao;
 		this.localDegustacao = localDegustacao;
-		Avaliacao = avaliacao;
+		this.avaliacao = avaliacao;
 		this.critica = critica;
 		this.foto = foto;
 		this.sugestao = sugestao;
@@ -73,12 +75,12 @@ public class Usuario_Cerveja {
 		this.idCerveja = idCerveja;
 	}
 
-	public String getDataDegustacao() {
+	public Date getDataDegustacao() {
 		return dataDegustacao;
 	}
 
-	public void setDataDegustacao(String dataDegustacao) {
-		this.dataDegustacao = dataDegustacao;
+	public void setDataDegustacao(Date date) {
+		this.dataDegustacao = date;
 	}
 
 	public String getLocalDegustacao() {
@@ -90,11 +92,11 @@ public class Usuario_Cerveja {
 	}
 
 	public int getAvaliacao() {
-		return Avaliacao;
+		return this.avaliacao;
 	}
 
 	public void setAvaliacao(int avaliacao) {
-		Avaliacao = avaliacao;
+		this.avaliacao = avaliacao;
 	}
 
 	public String getCritica() {

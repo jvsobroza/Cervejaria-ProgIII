@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,9 +31,7 @@ public class UsuarioCervejaDAO {
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setInt(1, degu.getIdUsuario());
 			ps.setInt(2, degu.getIdCerveja());
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			java.sql.Date data = new java.sql.Date(format.parse(degu.getDataDegustacao()).getTime());
-			ps.setDate(3, data);
+			ps.setDate(3, new java.sql.Date(degu.getDataDegustacao().getTime()));
 			ps.setString(4, degu.getLocalDegustacao());
 			ps.setInt(5, degu.getAvaliacao());
 			ps.setString(6, degu.getCritica());
@@ -63,7 +62,6 @@ public class UsuarioCervejaDAO {
 				degustacao.setCritica(rs.getString("critica"));
 				degustacao.setSugestao(rs.getString("sugestao"));
 				degustacao.setFoto(rs.getString("foto"));
-				System.out.println(degustacao.toString());
 				ls.add(degustacao);
 			}
 		} catch (SQLException e) {

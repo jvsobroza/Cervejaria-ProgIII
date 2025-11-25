@@ -21,6 +21,9 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+
 import controller.CervejaDAO;
 import controller.UsuarioCervejaDAO;
 
@@ -39,23 +42,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-/*
- * JFileChooser fileChooser = new JFileChooser();
 
-        // 2. Exibir a janela de diálogo e obter a resposta do usuário
-        // O showOpenDialog() abre o seletor para abrir um arquivo
-        int result = fileChooser.showOpenDialog(null);
-
-        // 3. Verificar se o usuário selecionou um arquivo
-        if (result == JFileChooser.APPROVE_OPTION) {
-            // 4. Obter o arquivo selecionado
-            java.io.File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
-            // Aqui você pode processar o arquivo (ler, salvar, etc.)
-        } else {
-            System.out.println("Nenhum arquivo foi selecionado.");
-        }
- */
 public class TelaCadastro extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -72,7 +59,7 @@ public class TelaCadastro extends JPanel {
 	private JLabel lblNewLabel_5;
 	private JTextField txtPais;
 	private JLabel lblNewLabel_6;
-	private JFormattedTextField txtData;
+	private JDateChooser txtData;
 	private JLabel lblNewLabel_7;
 	private JTextField txtLocal;
 	private JLabel lblNewLabel_8;
@@ -116,6 +103,7 @@ public class TelaCadastro extends JPanel {
 		add(this.lblNewLabel_1, "cell 1 2,alignx right");
 
 		this.comboCerveja = new JComboBox();
+		this.comboCerveja.setEditable(true);
 		this.comboCerveja.setMaximumRowCount(100);
 		this.comboCerveja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,6 +113,7 @@ public class TelaCadastro extends JPanel {
 					txtTeor.setText("");
 					txtTipo.setText("");
 					txtIbu.setText("");
+					txtPais.setText("");
 				}
 			}
 		});
@@ -165,27 +154,9 @@ public class TelaCadastro extends JPanel {
 
 		this.lblNewLabel_6 = new JLabel("Data de degustação");
 		add(this.lblNewLabel_6, "cell 1 7,alignx trailing");
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		this.txtData = new JFormattedTextField(format);
-		this.txtData.setText("01/01/1999");
+		this.txtData = new JDateChooser();
+		this.txtData.setDateFormatString("dd/MM/yyyy");
 		this.txtData.setForeground(Color.gray);
-		this.txtData.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (txtData.getText().equals("01/01/1999")) {
-					txtData.setText("");
-					txtData.setForeground(Color.BLACK);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtData.getText().isEmpty()) {
-					txtData.setText("01/01/1999");
-					txtData.setForeground(Color.GRAY);
-				}
-			}
-		});
 		add(this.txtData, "cell 2 7,growx");
 
 		this.lblNewLabel_7 = new JLabel("Local de degustação:");
@@ -260,6 +231,8 @@ public class TelaCadastro extends JPanel {
 		this.btCadastrarDegustacao = new JButton("Cadastrar degustação");
 		this.btCadastrarDegustacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(txtData.getDate());
+
 				if (possuiCamposVazios()) {
 					JOptionPane.showMessageDialog(null, "Possui campos vazios!", "Erro!", JOptionPane.ERROR_MESSAGE);
 				} else {
@@ -272,7 +245,7 @@ public class TelaCadastro extends JPanel {
 
 	public void iniciarCombo() {
 		for (Cerveja ceva : listaCerveja) {
-			comboCerveja.addItem("Nome: " + ceva.getNome());
+			comboCerveja.addItem(ceva.getNome());
 		}
 	}
 
@@ -288,12 +261,14 @@ public class TelaCadastro extends JPanel {
 		this.txtTipo.getText().equals("");
 		boolean verifica = (this.txtTipo.getText().equals("") || this.txtAvaliacao.getText().equals("")
 				|| this.txtComentario.getText().equals("") || this.txtComentario.getText().equals("")
-				|| this.txtData.getText().equals("") || this.txtLocal.getText().equals("")
+				|| this.txtData.getDateFormatString().equals("") || this.txtLocal.getText().equals("")
 				|| this.txtSugestao.getText().equals("") || this.labelNomeImg.getText().equals("")) ? true : false;
 		return verifica;
 	}
 
 	public void inserirDegustacao() {
+		System.out.println(this.txtData.getDate());
+
 		try {
 			String imagemBd = "";
 			if (this.imagem != null) {
@@ -313,7 +288,7 @@ public class TelaCadastro extends JPanel {
 			degustacao.setIdCerveja(id.getIdCerveja());
 			degustacao.setAvaliacao(Integer.parseInt(txtAvaliacao.getText()));
 			degustacao.setCritica(txtComentario.getText().toString());
-			degustacao.setDataDegustacao(txtData.getText().toString());
+			degustacao.setDataDegustacao(txtData.getDate());
 			degustacao.setLocalDegustacao(txtLocal.getText().toString());
 			degustacao.setSugestao(txtSugestao.getText().toString());
 			degustacao.setFoto(imagemBd);
@@ -325,15 +300,15 @@ public class TelaCadastro extends JPanel {
 
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null, "Erro ao mover a imagem: " + ex.getMessage());
-			ex.printStackTrace();
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + ex.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
 		}
 	}
 	
 	public void reiniciarCampos() {
 		comboCerveja.setSelectedIndex(0);
-		txtData.setText("");
+		txtData.setDateFormatString("");
 		txtAvaliacao.setText("");
 		txtComentario.setText("");
 		txtSugestao.setText("");
