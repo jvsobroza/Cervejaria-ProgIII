@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
@@ -26,14 +27,17 @@ public class TelaGaleria extends JPanel {
 	private Usuario user;
 	private JLabel lblNewLabel;
 	private JScrollPane scrollPane;
+	private UsuarioCervejaDAO conDegu;
 	private JTable table;
 
 	/**
 	 * Create the panel.
+	 * @throws IOException 
 	 */
-	public TelaGaleria(Usuario user) {
+	public TelaGaleria(Usuario user) throws IOException {
 		this.user = user;
 		initComponents();
+		this.conDegu = new UsuarioCervejaDAO();
 
 		this.lblNewLabel = new JLabel("Rótulos:");
 		this.lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -41,32 +45,34 @@ public class TelaGaleria extends JPanel {
 
 		this.scrollPane = new JScrollPane();
 		add(this.scrollPane, "cell 2 2,grow");
-
+		
 		this.table = new JTable();
-		this.table.setRowHeight(100);
-		this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		this.table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Foto", "Cerveja", "Data de degusta\u00E7\u00E3o" }) {
-			boolean[] columnEditables = new boolean[] { false, false, false };
-
-			@Override
+		this.table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Foto", "Cerveja", "Data degusta\u00E7\u00E3o"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
-
-			@Override
-			public Class<?> getColumnClass(int columnIndex) {
-				if (columnIndex == 0) {
-					return ImageIcon.class;
+			public Class<?> getColumnClass(int column) {
+				if (column == 0) {
+					return javax.swing.ImageIcon.class;
 				}
 				return Object.class;
 			}
 		});
-
-		this.table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		this.table.getColumnModel().getColumn(1).setPreferredWidth(250);
-		this.table.getColumnModel().getColumn(2).setPreferredWidth(150);
+		
+		this.table.setRowHeight(90);
+		this.table.getColumnModel().getColumn(0).setPreferredWidth(300);
+		this.table.getColumnModel().getColumn(1).setPreferredWidth(180);
+		this.table.getColumnModel().getColumn(2).setPreferredWidth(115);
+		this.scrollPane.setViewportView(this.table);
 		carregarDadosNaTabela();
 	}
 
@@ -76,49 +82,29 @@ public class TelaGaleria extends JPanel {
 		setLayout(new MigLayout("", "[][52.00][749.00,grow][]", "[][][grow][]"));
 	}
 
-	private void carregarDadosNaTabela() {
-		try {
-			UsuarioCervejaDAO dao = new UsuarioCervejaDAO();
-			LinkedList<Degustacao> lista = dao.listarParaGaleria(this.user);
-
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			model.setRowCount(0);
-
-			for (Degustacao degu : lista) {
-				ImageIcon icon = carregarImagem(degu.getFoto());
-				String dataFormatada = formatarData(degu.getData_degustacao());
-				model.addRow(new Object[] { icon, degu.getNome_cerveja(), dataFormatada });
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Erro ao carregar galeria: " + e.getMessage());
+	public void carregarDadosNaTabela() {
+		LinkedList<Degustacao> ls = conDegu.listarParaGaleria(this.user);
+		DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+		model.setRowCount(0);
+		for (Degustacao degu : ls) {
+			ImageIcon icon = carregarImagem(degu.getFoto());
+			model.addRow(new Object[] { icon, degu.getNome_cerveja(), degu.getData_degustacao() });
 		}
 	}
-
-	private String formatarData(java.util.Date data) {
-		if (data == null)
-			return "";
-		return new java.text.SimpleDateFormat("dd/MM/yyyy").format(data);
-	}
-
 	private ImageIcon carregarImagem(String caminhoDoBanco) {
-		if (caminhoDoBanco == null || caminhoDoBanco.isEmpty())
+		if (caminhoDoBanco == null || caminhoDoBanco.isEmpty()) {
 			return null;
+		}
 		try {
 			String raizDoProjeto = System.getProperty("user.dir");
-
-			if (!caminhoDoBanco.startsWith("/") && !caminhoDoBanco.startsWith("\\")) {
-				caminhoDoBanco = File.separator + caminhoDoBanco;
-			}
-
 			File arquivo = new File(raizDoProjeto + caminhoDoBanco);
-
 			if (arquivo.exists()) {
 				ImageIcon original = new ImageIcon(arquivo.getAbsolutePath());
-				Image img = original.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH);
-				return new ImageIcon(img);
+				Image imgRedimensionada = original.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+				return new ImageIcon(imgRedimensionada);
 			}
 		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
 		}
 		return null;
 	}

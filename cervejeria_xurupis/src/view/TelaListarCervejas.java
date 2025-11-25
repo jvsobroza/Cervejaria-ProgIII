@@ -74,6 +74,7 @@ public class TelaListarCervejas extends JPanel {
 		add(this.lblNewLabel_1, "flowx,cell 1 2,alignx center");
 
 		this.radioGeral = new JRadioButton("Geral");
+		this.radioGeral.setSelected(true);
 		buttonGroup.add(this.radioGeral);
 		this.radioGeral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

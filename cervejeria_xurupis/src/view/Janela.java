@@ -33,9 +33,9 @@ public class Janela extends JFrame {
 	private JMenuItem subMenuListagemListaGeral;
 	private JMenuItem SubMenuListagemListarRotulos;
 	private JMenuItem SubMenuListagemListarEstatistica;
-	private ImageIcon iconeCadastro = carregarIcon("/resources/img/icones/perfil.png"); // https://www.flaticon.com/br/icones-gratis/individual
-																						// ícones criados por Good Ware
-																						// - Flaticon
+	private ImageIcon iconeCadastro = carregarIcon("/resources/img/icones/cadastrar.png"); // https://www.flaticon.com/br/icones-gratis/tampa-de-garrafa
+																						// Tampa de garrafa
+																						// ícones criados por Freepik 
 	private ImageIcon iconeListar = carregarIcon("/resources/img/icones/lista.png"); // https://www.flaticon.com/br/icones-gratis/lista-de-afazeres
 																						// Lista de afazeres ícones
 																						// criados por bsd - Flaticon
@@ -63,10 +63,17 @@ public class Janela extends JFrame {
 	private ImageIcon iconeDeslogar = carregarIcon("/resources/img/icones/logout.png"); // https://www.flaticon.com/br/icones-gratis/saida
 																						// Saída ícones criados por
 																						// riajulislam - Flaticon
+	private ImageIcon iconePerfil = carregarIcon("/resources/img/icones/perfil.png"); // https://www.flaticon.com/br/icones-gratis/perfil-de-usuario
+																						// Perfil de usuário
+																						// ícones criados por Anggara
+
 	private static JMenu menuSair;
 	private JMenuItem subMenuSairDeslog;
 	private JMenu menuReturn;
 	public static Usuario us;
+	private static JMenu menuPerfil;
+	private JMenuItem subMenuPerfilAlterar;
+	private JMenuItem subMenuApagarPerfil;
 
 	/**
 	 * Launch the application.
@@ -156,12 +163,36 @@ public class Janela extends JFrame {
 		this.SubMenuListagemListarRotulos = new JMenuItem("Listar Rótulos");
 		this.SubMenuListagemListarRotulos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setContentPane(new TelaGaleria(us));
+				try {
+					setContentPane(new TelaGaleria(us));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				setVisible(true);
 			}
 		});
 		this.SubMenuListagemListarRotulos.setIcon(iconeListaRotulo);
 		this.menuListagem.add(this.SubMenuListagemListarRotulos);
+
+		this.menuPerfil = new JMenu("Perfil");
+		this.menuPerfil.setIcon(iconePerfil);
+		this.menuPerfil.setEnabled(false);
+		this.menuBar.add(this.menuPerfil);
+
+		this.subMenuPerfilAlterar = new JMenuItem("Alterar perfil");
+		this.subMenuPerfilAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		this.menuPerfil.add(this.subMenuPerfilAlterar);
+
+		this.subMenuApagarPerfil = new JMenuItem("Apagar perfil");
+		this.subMenuApagarPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		this.menuPerfil.add(this.subMenuApagarPerfil);
 
 		this.menuSair = new JMenu("Sair");
 		this.menuSair.setIcon(iconeSair);
@@ -224,6 +255,7 @@ public class Janela extends JFrame {
 		this.menuCadastro.setEnabled(ds);
 		this.menuListagem.setEnabled(ds);
 		this.menuSair.setEnabled(ds);
+		this.menuPerfil.setEnabled(ds);
 	}
 
 	public static void setUsuario(Usuario user) {
@@ -234,6 +266,7 @@ public class Janela extends JFrame {
 		menuCadastro.setEnabled(true);
 		menuListagem.setEnabled(true);
 		menuSair.setEnabled(true);
+		menuPerfil.setEnabled(true);
 	}
 
 }
