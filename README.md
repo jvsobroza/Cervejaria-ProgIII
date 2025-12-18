@@ -38,14 +38,15 @@ O projeto utiliza um banco de dados relacional (MySQL) com a seguinte estrutura:
 
 # Configuração do Ambiente
 Para que a aplicação se conecte ao seu banco de dados local, você deve configurar o arquivo de propriedades.
-Configurando o config.properties
+Configurando o config.properties.
 No diretório de recursos do projeto cervejeria_xurupis/properties, localize o arquivo de configuração e preencha com suas credenciais:
 
 ```Properties
-db.url= jdbc:mysql://localhost:3306/cervejaria
-db.user= seu_usuario_aqui
-db.password= sua_senha_aqui
-db.driver= com.mysql.cj.jdbc.Driver
+sgbd = mysql
+host = localhost
+bd = cervejaria
+login = seu_usuario_aqui
+password = sua_senha_aqui
 ```
 # Script de Criação
 Você pode encontrar os scripts SQL de criação das tabelas na seção abaixo:
