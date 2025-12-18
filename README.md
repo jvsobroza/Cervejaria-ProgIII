@@ -19,6 +19,14 @@ O sistema permite que o usuário documente detalhadamente cada cerveja degustada
 * Paradigma: Orientação a Objetos (POO)
 * Conceitos aplicados: Manipulação de coleções, persistência de dados e interface com o usuário.
 
+# Bibliotecas utilizadas
+
+| Biblioteca | Função |
+| :--- | :--- |
+| **MySQL Connector** | Conexão com o banco de dados |
+| **jBCrypt** | Criptografia de senhas |
+| **JCalendar** | Seletor de datas visual |
+
 # Estrutura do Banco de Dados
 O projeto utiliza um banco de dados relacional (MySQL) com a seguinte estrutura:
 * Tabela usuario: Armazena os dados de acesso (nome, email e senha);
