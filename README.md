@@ -107,8 +107,5 @@ Após criar as tabelas acima, você deve popular o banco com o catálogo inicial
 ... (partes anteriores do banco e properties)
 
 # Autor
-
-Desenvolvido por **João Victor Sobroza Dal Ross**.
-
-[![Gmail Badge](https://img.shields.io/badge/-Gmail-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:joaovictor0908.jv@gmail.com)](mailto:joaovictor0908.jv@gmail.com)
-[![GitHub Badge](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white&link=https://github.com/jvsobroza)](https://github.com/jvsobroza)
+* **Nome:** [João Victor Sobroza Dal Ross](https://github.com/jvsobroza)
+* **E-mail:** joaovictor0908.jv@gmail.com
