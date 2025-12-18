@@ -104,8 +104,6 @@ Após criar as tabelas acima, você deve popular o banco com o catálogo inicial
 * Configure o arquivo .properties com seus dados.
 * Compile e execute o projeto através da sua IDE (IntelliJ/Eclipse/VS Code).
 
-... (partes anteriores do banco e properties)
-
 # Autor
 * **Nome:** [João Victor Sobroza Dal Ross](https://github.com/jvsobroza)
 * **E-mail:** joaovictor0908.jv@gmail.com
