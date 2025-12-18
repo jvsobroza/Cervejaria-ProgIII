@@ -38,7 +38,7 @@ O projeto utiliza um banco de dados relacional (MySQL) com a seguinte estrutura:
 
 # Configuração do Ambiente
 Para que a aplicação se conecte ao seu banco de dados local, você deve configurar o arquivo de propriedades.
-Configurando o database.properties
+Configurando o config.properties
 No diretório de recursos do projeto cervejeria_xurupis/properties, localize o arquivo de configuração e preencha com suas credenciais:
 
 ```Properties
