@@ -94,6 +94,13 @@ CREATE TABLE `usuario_cerveja` (
   FOREIGN KEY (`id_usuario`) REFERENCES usuario (`id_usuario`),
   FOREIGN KEY (`id_cerveja`) REFERENCES cerveja (`id_cerveja`)
 );
+
+--Trigger de Segurança
+CREATE TRIGGER apagar_usuario BEFORE DELETE ON usuario 
+FOR EACH ROW 
+BEGIN 
+    DELETE FROM usuario_cerveja WHERE usuario_cerveja.id_usuario = OLD.id_usuario; 
+END
 ```
 Após criar as tabelas acima, você deve popular o banco com o catálogo inicial de cervejas. Para isso:
 
