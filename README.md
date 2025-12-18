@@ -49,7 +49,11 @@ login = seu_usuario_aqui
 password = sua_senha_aqui
 ```
 # Script de Criação
-Você pode encontrar os scripts SQL de criação das tabelas na seção abaixo:
+Aqui está a representação visual das tabelas e seus relacionamentos:
+<p align="center">
+  <img src="./resources/DER.png" alt="Diagrama do Banco" width="600">
+</p>
+Você pode encontrar os comandos SQL de criação das tabelas na seção abaixo:
 
 ```SQL
 -- Criação do banco
